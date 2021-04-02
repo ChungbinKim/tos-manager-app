@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">ToS Manager</string>
+    <!-- Log-in Activity -->
+    <string name="text_sign_in_description">데이터 동기화를 위한</string>
+    <string name="prompt_email">이메일</string>
+    <string name="prompt_password">비밀번호</string>
+    <string name="action_sign_in">로그인</string>
+    <string name="action_create_account">계정 생성</string>
+    <string name="action_recover_password">비밀번호 찾기</string>
+    <string name="separator">|</string>
+    <string name="action_skip_sign_in">건너뛰기</string>
+    <!--    Create account Activity-->
+    <string name="prompt_password_confirm">비밀번호 확인</string>
+    <string name="text_privacy_policy_description">계정 생성시 개인정보처리방침에 동의한 것으로 간주합니다.</string>
+<!--    Recover password Activity-->
+    <string name="text_recover_password_description">이메일 주소 인증을 통해 비밀번호 찾기가 이루어집니다.</string>
+</resources>
