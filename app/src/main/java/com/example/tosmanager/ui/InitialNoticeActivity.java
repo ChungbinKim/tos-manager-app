@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -28,12 +30,21 @@ public class InitialNoticeActivity extends AppCompatActivity {
     private TextView initialNoticeText;
     private Button initialNoticeAgreeButton;
 
+    private SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial_notice);
 
         viewModel = new ViewModelProvider(this).get(InitialNoticeViewModel.class);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        boolean isAgreed = sharedPreferences.getBoolean("is-agreed", false);
+        if (isAgreed) {
+            proceed();
+            return;
+        }
 
         // 고지 텍스트
         SpannableStringBuilder builder = new SpannableStringBuilder();
@@ -51,12 +62,18 @@ public class InitialNoticeActivity extends AppCompatActivity {
         // 동의 버튼
         initialNoticeAgreeButton = (Button) findViewById(R.id.initialNoticeAgreeButton);
         initialNoticeAgreeButton.setOnClickListener(v -> {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
+            proceed();
         });
 
         viewModel.getConfirmText().observe(this, s -> {
             initialNoticeAgreeButton.setEnabled(viewModel.isConfirmed());
         });
+    }
+
+    private void proceed() {
+        sharedPreferences.edit().putBoolean("is-agreed", true).apply();
+
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 }
