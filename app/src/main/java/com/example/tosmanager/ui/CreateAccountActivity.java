@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -21,7 +22,6 @@ public class CreateAccountActivity extends AppCompatActivity {
     // UI
     private Button createAccountButton;
     dbhelper helper;
-    SQLiteDatabase db;
 
     EditText createAccountEmail;
     EditText createAccountPassword;
@@ -50,38 +50,18 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         // 계정 생성 버튼
         createAccountButton = (Button) findViewById(R.id.createAccountCreateButton);
-
-       createAccountButton.setOnClickListener(v -> {
-            viewModel.createAccount(s -> {
-                //회원가입
-                db = helper.getReadableDatabase();
-
-                String email = createAccountEmail.getText().toString();
-                String password = createAccountPassword.getText().toString();
-                String pwdconfirm = createAccountPasswordConfirm.getText().toString();
-                String sql = "select * from user where email = '"+email+"'";
-                Cursor cursor = db.rawQuery(sql, null);
-
-                if(password.equals(pwdconfirm)){
-                    if (cursor.getCount()==1) {
-                        Toast.makeText(getApplicationContext(), "이미 존재하는 아이디입니다.", Toast.LENGTH_LONG).show();
-                    }
-                    else {
-                        db.execSQL("INSERT INTO user(email, password) VALUES ('"+email+"','"+password+"');");
-                        Toast.makeText(getApplicationContext(), "회원가입 성공", Toast.LENGTH_SHORT).show();
-                        finish();
-                    }
-                    cursor.close();
-                    db.close();
-                }
-                else{
-                    Toast.makeText(getApplicationContext(), "정보를 다시 입력해주세요.", Toast.LENGTH_LONG).show();
-                }
-            }, e -> {});
+        createAccountButton.setOnClickListener(v -> {
+            // 계정생성 결과 알림
+            viewModel.createAccount(helper, s -> {
+                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+                finish();
+            }, e -> {
+                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+            });
         });
+
         viewModel.getIsCreatingAccount().observe(this, b -> {
             createAccountButton.setEnabled(!b);
         });
-
     }
 }
