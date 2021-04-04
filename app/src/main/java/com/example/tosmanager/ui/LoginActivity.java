@@ -7,8 +7,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.tosmanager.R;
+import com.example.tosmanager.model.dbhelper;
 import com.example.tosmanager.util.ForwardText;
 import com.example.tosmanager.viewmodel.LoginViewModel;
 

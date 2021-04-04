@@ -3,25 +3,17 @@ package com.example.tosmanager.ui;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.service.autofill.OnClickAction;
-import android.text.Editable;
-import android.text.TextPaint;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.tosmanager.R;
+import com.example.tosmanager.model.dbhelper;
 import com.example.tosmanager.util.ForwardText;
 import com.example.tosmanager.viewmodel.CreateAccountViewModel;
-import com.example.tosmanager.viewmodel.LoginViewModel;
 
 public class CreateAccountActivity extends AppCompatActivity {
     private static final String TAG = "CreateAccountActivity";

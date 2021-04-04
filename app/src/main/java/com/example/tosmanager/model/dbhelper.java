@@ -1,4 +1,4 @@
-package com.example.tosmanager.ui;
+package com.example.tosmanager.model;
 
 import android.content.ContentValues;
 import android.content.Context;
