@@ -52,7 +52,6 @@ public class InitialNoticeActivity extends AppCompatActivity {
         initialNoticeAgreeButton = (Button) findViewById(R.id.initialNoticeAgreeButton);
         initialNoticeAgreeButton.setOnClickListener(v -> {
             Intent intent = new Intent(this, LoginActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             startActivity(intent);
         });
 
