@@ -9,9 +9,29 @@
     <string name="action_recover_password">비밀번호 찾기</string>
     <string name="separator">|</string>
     <string name="action_skip_sign_in">건너뛰기</string>
-    <!--    Create account Activity-->
+    <!-- Create account Activity-->
     <string name="prompt_password_confirm">비밀번호 확인</string>
     <string name="text_privacy_policy_description">계정 생성시 개인정보처리방침에 동의한 것으로 간주합니다.</string>
-<!--    Recover password Activity-->
+    <!-- Recover password Activity-->
     <string name="text_recover_password_description">이메일 주소 인증을 통해 비밀번호 찾기가 이루어집니다.</string>
+<!-- Initial notice Activity -->
+    <string name="text_notice_header">사용하기 앞서…</string>
+    <string name="text_notice_confirm">확인</string>
+<!-- Initial notice -->
+    <string name="text_notice">
+        엄청나게 긴 글자 엄청나게 긴 글자 엄청나게 긴 글자 엄청나게 긴 글자 엄청나게 긴 글자 엄청나게 긴 글자
+        엄청나게 긴 글자 엄청나게 긴 글자 엄청나게 긴 글자 엄청나게 긴 글자 엄청나게 긴 글자 엄청나게 긴 글자 엄청나게 긴 글자 엄청나게 긴 글자 엄청나게 긴 글자
+        엄청나게 긴 글자 엄청나게 긴 글자 엄청나게 긴 글자 엄청나게 긴 글자
+        엄청나게 긴 글자 엄청나게 긴 글자 엄청나게 긴 글자 엄청나게 긴 글자 엄청나게 긴 글자 엄청나게 긴 글자 엄청나게 긴 글자
+
+        엄청나게 긴 글자 엄청나게 긴 글자 엄청나게 긴 글자 엄청나게 긴 글자 엄청나게 긴 글자
+        엄청나게 긴 글자 엄청나게 긴 글자 엄청나게 긴 글자
+        엄청나게 긴 글자 엄청나게 긴 글자 엄청나게 긴 글자 엄청나게 긴 글자 엄청나게 긴 글자 엄청나게 긴 글자
+
+        엄청나게 긴 글자 엄청나게 긴 글자 엄청나게 긴 글자 엄청나게 긴 글자
+        엄청나게 긴 글자 엄청나게 긴 글자 엄청나게 긴 글자
+        엄청나게 긴 글자 엄청나게 긴 글자 엄청나게 긴 글자 엄청나게 긴 글자 엄청나게 긴 글자 엄청나게 긴 글자
+
+        이에 동의하신다면 "동의합니다"를 입력하시고, 확인을 눌러주세요.
+    </string>
 </resources>
