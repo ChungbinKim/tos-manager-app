@@ -40,6 +40,7 @@ public class InitialNoticeActivity extends AppCompatActivity {
 
         viewModel = new ViewModelProvider(this).get(InitialNoticeViewModel.class);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        getSupportActionBar().hide();
 
         boolean isAgreed = sharedPreferences.getBoolean("is-agreed", false);
         if (isAgreed) {
