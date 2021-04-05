@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Html;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -47,13 +48,8 @@ public class InitialNoticeActivity extends AppCompatActivity {
         }
 
         // 고지 텍스트
-        SpannableStringBuilder builder = new SpannableStringBuilder();
-        SpannableString string = new SpannableString(getString(R.string.text_notice));
-        string.setSpan(new StyleSpan(Typeface.BOLD), 0, string.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        builder.append(string);
-
         initialNoticeText = (TextView) findViewById(R.id.initialNoticeText);
-        initialNoticeText.setText(builder);
+        initialNoticeText.setText(Html.fromHtml(getString(R.string.text_notice)));
 
         // 동의 텍스트창
         TextInputEditText initialNoticeTextField = (TextInputEditText) findViewById(R.id.initialNoticeTextField);
