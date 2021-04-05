@@ -17,6 +17,7 @@ import com.example.tosmanager.R;
 import com.example.tosmanager.model.dbhelper;
 import com.example.tosmanager.util.ForwardText;
 import com.example.tosmanager.viewmodel.LoginViewModel;
+import com.google.android.material.textfield.TextInputEditText;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
@@ -25,8 +26,8 @@ public class LoginActivity extends AppCompatActivity {
 
     // UI elements
     private Button skipButton;
-    EditText loginEmail;
-    EditText loginPassword;
+    TextInputEditText loginEmail;
+    TextInputEditText loginPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,16 +36,17 @@ public class LoginActivity extends AppCompatActivity {
 
         viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         setUpObservers();
+        getSupportActionBar().hide();
 
         // DB객체
         helper=new dbhelper(this);
 
         // 이메일 입력창
-        loginEmail = (EditText) findViewById(R.id.loginEmail);
+        loginEmail = (TextInputEditText) findViewById(R.id.loginEmail);
         loginEmail.addTextChangedListener(new ForwardText(viewModel.getID()));
 
         // 비밀번호 입력창
-        loginPassword = (EditText) findViewById(R.id.loginPassword);
+        loginPassword = (TextInputEditText) findViewById(R.id.loginPassword);
         loginPassword.addTextChangedListener(new ForwardText(viewModel.getPassword()));
 
         // 건너뛰기
