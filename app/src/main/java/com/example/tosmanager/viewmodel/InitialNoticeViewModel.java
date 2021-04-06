@@ -12,6 +12,6 @@ public class InitialNoticeViewModel extends ViewModel {
     }
 
     public boolean isConfirmed() {
-        return confirmText.getValue().matches("(?i)^(동의합니다|I Agree)\\.?$");
+        return confirmText.getValue().matches("(?i)^\"?(동의합니다|I Agree)\\.?\"?$");
     }
 }
