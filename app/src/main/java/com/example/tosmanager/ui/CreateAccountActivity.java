@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 import com.example.tosmanager.R;
 import com.example.tosmanager.model.dbhelper;
 import com.example.tosmanager.util.ForwardText;
+import com.example.tosmanager.util.SimpleClickableSpan;
 import com.example.tosmanager.viewmodel.CreateAccountViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -93,20 +95,11 @@ public class CreateAccountActivity extends AppCompatActivity {
 
             if (i == 1) {
                 // 링크 생성
-                str.setSpan(new ClickableSpan() {
-                    @Override
-                    public void onClick(@NonNull View widget) {
-
-                    }
-
-                    @Override
-                    public void updateDrawState(@NonNull TextPaint ds) {
-                        super.updateDrawState(ds);
-                        ds.setColor(getResources().getColor(R.color.design_default_color_primary));
-                        ds.bgColor = 0xffffffff;
-                        ds.setUnderlineText(false);
-                    }
-                }, 0, strings[i].length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                int color = getResources().getColor(R.color.design_default_color_primary);
+                str.setSpan(new SimpleClickableSpan(color, v -> {
+                    Intent intent = new Intent(this, PrivacyPolicyActivity.class);
+                    startActivity(intent);
+                }), 0, strings[i].length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
 
             builder.append(str);

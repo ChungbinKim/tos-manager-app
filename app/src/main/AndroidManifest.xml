@@ -24,6 +24,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.PrivacyPolicyActivity"
+            android:parentActivityName=".ui.CreateAccountActivity">
+        </activity>
     </application>
 
 </manifest>

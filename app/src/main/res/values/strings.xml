@@ -18,4 +18,13 @@
     </string-array>
 <!--    Recover password Activity-->
     <string name="text_recover_password_description">이메일 주소 인증을 통해 비밀번호 찾기가 이루어집니다.</string>
+<!-- Privacy Policy -->
+    <string name="privacy_policy_text">
+<![CDATA[
+<p>
+엄청나게 긴 텍스트 엄청나게 긴 텍스트 엄청나게 긴 텍스트 엄청나게 긴 텍스트 엄청나게 긴 텍스트 엄청나게 긴 텍스트 엄청나게 긴 텍스트<br>
+엄청나게 긴 텍스트 엄청나게 긴 텍스트 엄청나게 긴 텍스트 엄청나게 긴 텍스트 엄청나게 긴 텍스트<br>
+</p>
+]]>
+    </string>
 </resources>
