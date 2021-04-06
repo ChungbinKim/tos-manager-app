@@ -11,7 +11,11 @@
     <string name="action_skip_sign_in">건너뛰기</string>
     <!--    Create account Activity-->
     <string name="prompt_password_confirm">비밀번호 확인</string>
-    <string name="text_privacy_policy_description">계정 생성시 개인정보처리방침에 동의한 것으로 간주합니다.</string>
+    <string-array name="text_privacy_policy_description">
+        <item>계정 생성시 </item>
+        <item>개인정보처리방침</item>
+        <item>에 동의한 것으로 간주합니다.</item>
+    </string-array>
 <!--    Recover password Activity-->
     <string name="text_recover_password_description">이메일 주소 인증을 통해 비밀번호 찾기가 이루어집니다.</string>
 </resources>
