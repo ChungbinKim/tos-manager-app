@@ -10,6 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ToSManager">
         <activity
+            android:name=".ui.InitialNoticeActivity"
+            android:noHistory="true"
+            android:windowSoftInputMode="stateAlwaysHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".ui.RecoverPasswordActivity"
             android:parentActivityName=".ui.LoginActivity">
         </activity>
@@ -17,13 +27,7 @@
         <activity
             android:name=".ui.CreateAccountActivity"
             android:parentActivityName=".ui.LoginActivity" />
-        <activity android:name=".ui.LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".ui.LoginActivity" />
         <activity
             android:name=".ui.PrivacyPolicyActivity"
             android:parentActivityName=".ui.CreateAccountActivity">
