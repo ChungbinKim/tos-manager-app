@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigationMyTos"
+        android:title="@string/navigation_my_tos" />
+    <item
+        android:id="@+id/navigationCalendar"
+        android:title="@string/navigation_calendar" />
+    <item
+        android:id="@+id/navigationConfiguration"
+        android:title="@string/navigation_configuration" />
+</menu>
