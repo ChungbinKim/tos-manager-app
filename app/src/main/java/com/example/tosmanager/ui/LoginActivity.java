@@ -4,13 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.tosmanager.R;
@@ -63,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onLogIn(View v) {
         viewModel.logIn(helper, s -> {
             Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(this, MyTosActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }, e -> {
             // 로그인 실패
@@ -75,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
     // 건너뛰기
     public void onSkipLogIn(View v) {
         viewModel.skipLogIn();
-        Intent intent = new Intent(this, MyTosActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 

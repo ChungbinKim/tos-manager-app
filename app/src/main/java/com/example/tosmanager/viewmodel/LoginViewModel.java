@@ -1,10 +1,8 @@
 package com.example.tosmanager.viewmodel;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -12,8 +10,6 @@ import androidx.lifecycle.ViewModel;
 import com.example.tosmanager.model.DataHolder;
 import com.example.tosmanager.model.LoginSession;
 import com.example.tosmanager.model.dbhelper;
-import com.example.tosmanager.ui.LoginActivity;
-import com.example.tosmanager.ui.MyTosActivity;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;

@@ -13,7 +13,7 @@
             android:name=".ui.RecoverPasswordActivity"
             android:parentActivityName=".ui.LoginActivity">
         </activity>
-        <activity android:name=".ui.MyTosActivity" />
+        <activity android:name=".ui.MainActivity" />
         <activity
             android:name=".ui.CreateAccountActivity"
             android:parentActivityName=".ui.LoginActivity" />
