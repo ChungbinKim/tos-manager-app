@@ -4,11 +4,14 @@
 
     <item
         android:id="@+id/navigationMyTos"
+        android:icon="@drawable/ic_baseline_format_list_bulleted_24"
         android:title="@string/navigation_my_tos" />
     <item
         android:id="@+id/navigationCalendar"
+        android:icon="@drawable/ic_baseline_calendar_today_24"
         android:title="@string/navigation_calendar" />
     <item
         android:id="@+id/navigationConfiguration"
+        android:icon="@drawable/ic_baseline_settings_24"
         android:title="@string/navigation_configuration" />
 </menu>
