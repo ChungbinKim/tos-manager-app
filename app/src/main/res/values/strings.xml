@@ -16,13 +16,13 @@
         <item>개인정보처리방침</item>
         <item>에 동의한 것으로 간주합니다.</item>
     </string-array>
-<!--    Recover password Activity-->
+    <!--    Recover password Activity-->
     <string name="text_recover_password_description">이메일 주소 인증을 통해 비밀번호 찾기가 이루어집니다.</string>
-<!-- Navigation -->
+    <!-- Navigation -->
     <string name="navigation_my_tos">내 약관</string>
     <string name="navigation_calendar">달력</string>
     <string name="navigation_configuration">환경 설정</string>
-<!-- Privacy Policy -->
+    <!-- Privacy Policy -->
     <string name="privacy_policy_text">
 <![CDATA[
 <p>
