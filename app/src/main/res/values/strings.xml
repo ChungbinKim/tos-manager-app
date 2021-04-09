@@ -31,6 +31,28 @@
     <string name="navigation_calendar">달력</string>
     <string name="navigation_configuration">환경 설정</string>
 
+    <!-- Configuration Fragment -->
+    <string name="header_ui_ux">UI/UX</string>
+    <string name="input_tutorial_title">약관 입력</string>
+    <string name="input_tutorial_summary">약관 텍스트 입력 아래에 더 편리한 입력 방법에 대한 설명을 표시합니다.</string>
+
+    <string name="header_data">데이터</string>
+    <string name="import_title">가져오기</string>
+    <string name="import_summary">약관 목록을 외부 파일로부터 받아들입니다.</string>
+    <string name="export_title">내보내기</string>
+    <string name="export_summary">약관 목록을 디바이스에 저장합니다.</string>
+
+    <string name="header_calendar">달력</string>
+    <string name="embedded_calendar_title">내장된 달력 사용</string>
+    <string name="embedded_calendar_summary">이 설정을 끄면 일정은 기본 달력 어플리케이션에 저장됩니다.</string>
+
+    <string name="header_account">계정</string>
+    <string name="log_in_title">로그인</string>
+    <string name="log_out_title">로그아웃</string>
+
+    <string name="header_miscellaneous">기타</string>
+    <string name="version_info_title">버전 정보</string>
+
     <!-- Privacy Policy -->
     <string name="privacy_policy_text">
 <![CDATA[
