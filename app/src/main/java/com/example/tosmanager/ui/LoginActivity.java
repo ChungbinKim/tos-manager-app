@@ -39,15 +39,15 @@ public class LoginActivity extends AppCompatActivity {
         helper=new dbhelper(this);
 
         // 이메일 입력창
-        loginEmail = (TextInputEditText) findViewById(R.id.loginEmail);
+        loginEmail = findViewById(R.id.loginEmail);
         loginEmail.addTextChangedListener(new ForwardText(viewModel.getID()));
 
         // 비밀번호 입력창
-        loginPassword = (TextInputEditText) findViewById(R.id.loginPassword);
+        loginPassword = findViewById(R.id.loginPassword);
         loginPassword.addTextChangedListener(new ForwardText(viewModel.getPassword()));
 
         // 건너뛰기
-        skipButton = (Button) findViewById(R.id.loginSkipButton);
+        skipButton = findViewById(R.id.loginSkipButton);
     }
 
     // 계정 생성

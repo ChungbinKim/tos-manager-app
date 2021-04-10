@@ -19,7 +19,7 @@ public class PrivacyPolicyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_privacy_policy);
 
         // 개인정보처리방침
-        privacy_policy_text = (TextView) findViewById(R.id.privacyPolicyText);
+        privacy_policy_text = findViewById(R.id.privacyPolicyText);
         privacy_policy_text.setText(Html.fromHtml(getString(R.string.privacy_policy_text)));
     }
 }

@@ -25,7 +25,7 @@ public class RecoverPasswordActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(RecoverPasswordViewModel.class);
 
         // 비밀번호 찾기 버튼
-        recoverButton = (Button) findViewById(R.id.recoverPasswordButton);
+        recoverButton = findViewById(R.id.recoverPasswordButton);
         recoverButton.setOnClickListener(v -> {
             viewModel.recoverPassword(s -> {
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
@@ -34,7 +34,7 @@ public class RecoverPasswordActivity extends AppCompatActivity {
         });
 
         // 이메일 입력
-        TextInputEditText emailInput = (TextInputEditText) findViewById(R.id.recoverPasswordEmail);
+        TextInputEditText emailInput = findViewById(R.id.recoverPasswordEmail);
         emailInput.addTextChangedListener(new ForwardText(viewModel.getEmail()));
 
         viewModel.getIsRequesting().observe(this, b -> {

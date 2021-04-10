@@ -52,19 +52,19 @@ public class CreateAccountActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(CreateAccountViewModel.class);
 
         // 이메일 입력창
-        createAccountEmail = (TextInputEditText) findViewById(R.id.loginEmail);
+        createAccountEmail = findViewById(R.id.loginEmail);
         createAccountEmail.addTextChangedListener(new ForwardText(viewModel.getEmail()));
 
         // 비밀번호 입력창
-         createAccountPassword = (TextInputEditText) findViewById(R.id.loginPassword);
+         createAccountPassword = findViewById(R.id.loginPassword);
          createAccountPassword.addTextChangedListener(new ForwardText(viewModel.getPassword()));
 
         // 비밀번호 확인 입력창
-        createAccountPasswordConfirm = (TextInputEditText) findViewById(R.id.createAccountPasswordConfirm);
+        createAccountPasswordConfirm = findViewById(R.id.createAccountPasswordConfirm);
         createAccountPasswordConfirm.addTextChangedListener(new ForwardText(viewModel.getPasswordConfirm()));
 
         // 계정 생성 버튼
-        createAccountButton = (Button) findViewById(R.id.createAccountCreateButton);
+        createAccountButton = findViewById(R.id.createAccountCreateButton);
         createAccountButton.setOnClickListener(v -> {
             // 계정생성 결과 알림
             viewModel.createAccount(helper, s -> {
@@ -80,7 +80,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         });
 
         // 계정생성 주의사항
-        createAccountNotice = (TextView) findViewById(R.id.createAccountNotice);
+        createAccountNotice = findViewById(R.id.createAccountNotice);
         createAccountNotice.setText(createNotice());
         createAccountNotice.setMovementMethod(LinkMovementMethod.getInstance());
     }
