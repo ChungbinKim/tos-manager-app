@@ -14,9 +14,11 @@
     <PreferenceCategory app:title="@string/header_data">
 
         <Preference
+            app:key="import"
             app:title="@string/import_title"
             app:summary="@string/import_summary" />
         <Preference
+            app:key="export"
             app:title="@string/export_title"
             app:summary="@string/export_summary" />
 

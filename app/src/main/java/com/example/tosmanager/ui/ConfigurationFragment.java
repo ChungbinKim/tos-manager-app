@@ -1,42 +1,59 @@
 package com.example.tosmanager.ui;
 
-import android.app.Activity;
-import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
+import androidx.annotation.Nullable;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.example.tosmanager.BuildConfig;
 import com.example.tosmanager.R;
 import com.example.tosmanager.model.DataHolder;
 import com.example.tosmanager.util.CreateDialog;
 
 public class ConfigurationFragment extends PreferenceFragmentCompat {
-    private boolean logout;
+    private static final int IMPORT_DATA = 1;
+    private static final int EXPORT_DATA = 2;
+
+    private boolean promptResult;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey);
 
         DataHolder dataHolder = DataHolder.getInstace();
+
+        // 가져오기
+        Preference importPreference = findPreference("import");
+        importPreference.setOnPreferenceClickListener(preference -> {
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("application/json");
+            startActivityForResult(intent, IMPORT_DATA);
+
+            return true;
+        });
+
+        // 내보내기
+        Preference exportPreference = findPreference("export");
+        exportPreference.setOnPreferenceClickListener(preference -> {
+            Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("application/json");
+            intent.putExtra(Intent.EXTRA_TITLE, "tos.json");
+            startActivityForResult(intent, EXPORT_DATA);
+
+            return true;
+        });
+
         // 로그인/로그아웃
         Preference loginOutPreference = findPreference("loginOut");
         if (dataHolder.getLoginSession() != null) {
             loginOutPreference.setTitle(getString(R.string.log_out_title));
 
             loginOutPreference.setOnPreferenceClickListener(preference -> {
-                logout = false;
+                promptResult = false;
                 CreateDialog.createPrompt(getActivity(), R.string.log_out_dialog_message, (dialog, which) -> {
                     dataHolder.setLoginSession(null);
 
@@ -44,10 +61,10 @@ public class ConfigurationFragment extends PreferenceFragmentCompat {
                     startActivity(intent);
                     getActivity().finish();
 
-                    logout = true;
+                    promptResult = true;
                 }).show();
 
-                return logout;
+                return promptResult;
             });
         } else {
             loginOutPreference.setTitle(getString(R.string.log_in_title));
