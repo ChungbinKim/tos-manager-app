@@ -1,8 +1,10 @@
 package com.example.tosmanager.ui;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.preference.Preference;
@@ -11,6 +13,9 @@ import androidx.preference.PreferenceFragmentCompat;
 import com.example.tosmanager.R;
 import com.example.tosmanager.model.DataHolder;
 import com.example.tosmanager.util.CreateDialog;
+
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class ConfigurationFragment extends PreferenceFragmentCompat {
     private static final int IMPORT_DATA = 1;
@@ -85,5 +90,35 @@ public class ConfigurationFragment extends PreferenceFragmentCompat {
             version = "Not Found";
         }
         versionPreference.setSummary(String.format("Version: %s", version));
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        try {
+            super.onActivityResult(requestCode, resultCode, data);
+
+            if (resultCode == Activity.RESULT_OK) {
+                switch (requestCode) {
+                    case IMPORT_DATA:
+                        InputStream inputStream = getActivity().getContentResolver().openInputStream(data.getData());
+
+                        // TODO: 입력 -> DB에 저장
+                        Toast.makeText(getActivity(), "import", Toast.LENGTH_SHORT).show();
+
+                        inputStream.close();
+                        break;
+                    case EXPORT_DATA:
+                        OutputStream outputStream = getActivity().getContentResolver().openOutputStream(data.getData());
+
+                        // TODO: DB 가져오기 -> 출력
+                        Toast.makeText(getActivity(), "export", Toast.LENGTH_SHORT).show();
+
+                        outputStream.close();
+                        break;
+                }
+            }
+        } catch (Exception e) {
+            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 }
