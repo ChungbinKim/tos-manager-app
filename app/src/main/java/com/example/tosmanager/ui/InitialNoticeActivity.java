@@ -35,7 +35,7 @@ public class InitialNoticeActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         boolean isAgreed = sharedPreferences.getBoolean("is-agreed", false);
-        if (isAgreed && !BuildConfig.DEBUG) {
+        if (isAgreed) {
             proceed();
             return;
         }
