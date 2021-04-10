@@ -60,8 +60,11 @@ public class LoginActivity extends AppCompatActivity {
     public void onLogIn(View v) {
         viewModel.logIn(helper, s -> {
             Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+
             Intent intent = new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
+            finish();
         }, e -> {
             // 로그인 실패
             Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
@@ -73,7 +76,9 @@ public class LoginActivity extends AppCompatActivity {
     public void onSkipLogIn(View v) {
         viewModel.skipLogIn();
         Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+        finish();
     }
 
     // 비밀번호 찾기

@@ -35,6 +35,7 @@
     <PreferenceCategory app:title="@string/header_account">
 
         <Preference
+            app:key="loginOut"
             app:title="@string/log_in_title" />
 
     </PreferenceCategory>
