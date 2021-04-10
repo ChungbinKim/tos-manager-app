@@ -35,21 +35,21 @@ public class InitialNoticeActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         boolean isAgreed = sharedPreferences.getBoolean("is-agreed", false);
-        if (isAgreed && !BuildConfig.DEBUG) {
+        if (isAgreed) {
             proceed();
             return;
         }
 
         // 고지 텍스트
-        initialNoticeText = (TextView) findViewById(R.id.initialNoticeText);
+        initialNoticeText = findViewById(R.id.initialNoticeText);
         initialNoticeText.setText(Html.fromHtml(getString(R.string.text_notice)));
 
         // 동의 텍스트창
-        TextInputEditText initialNoticeTextField = (TextInputEditText) findViewById(R.id.initialNoticeTextField);
+        TextInputEditText initialNoticeTextField = findViewById(R.id.initialNoticeTextField);
         initialNoticeTextField.addTextChangedListener(new ForwardText(viewModel.getConfirmText()));
 
         // 동의 버튼
-        initialNoticeAgreeButton = (Button) findViewById(R.id.initialNoticeAgreeButton);
+        initialNoticeAgreeButton = findViewById(R.id.initialNoticeAgreeButton);
         initialNoticeAgreeButton.setOnClickListener(v -> {
             proceed();
         });
