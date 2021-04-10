@@ -4,6 +4,7 @@
     <!-- General -->
     <string name="yes">네</string>
     <string name="no">아니오</string>
+    <string name="search">검색</string>
 
     <!-- Initial notice Activity -->
     <string name="text_notice_header">사용하기 앞서…</string>
@@ -34,6 +35,9 @@
     <string name="navigation_my_tos">내 약관</string>
     <string name="navigation_calendar">달력</string>
     <string name="navigation_configuration">환경 설정</string>
+
+    <!-- My TOS Fragment -->
+    <string name="my_tos_list_header">목록</string>
 
     <!-- Configuration Fragment -->
     <string name="header_ui_ux">UI/UX</string>
