@@ -16,13 +16,13 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textColor="@color/purple_700"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+        app:layout_constraintBottom_toTopOf="@+id/myTosList"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_conversion_absoluteHeight="19dp"
         tools:layout_conversion_absoluteWidth="42dp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/myTosList"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
