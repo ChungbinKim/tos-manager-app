@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import com.example.tosmanager.BuildConfig;
 import com.example.tosmanager.R;
 import com.example.tosmanager.model.DataHolder;
+import com.example.tosmanager.util.CreateDialog;
 
 public class ConfigurationFragment extends PreferenceFragmentCompat {
     private boolean logout;
@@ -36,7 +37,7 @@ public class ConfigurationFragment extends PreferenceFragmentCompat {
 
             loginOutPreference.setOnPreferenceClickListener(preference -> {
                 logout = false;
-                createLogoutDialog((dialog, which) -> {
+                CreateDialog.createPrompt(getActivity(), R.string.log_out_dialog_message, (dialog, which) -> {
                     dataHolder.setLoginSession(null);
 
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
@@ -67,15 +68,5 @@ public class ConfigurationFragment extends PreferenceFragmentCompat {
             version = "Not Found";
         }
         versionPreference.setSummary(String.format("Version: %s", version));
-    }
-
-    private Dialog createLogoutDialog(DialogInterface.OnClickListener onClick) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-        builder.setMessage(R.string.log_out_dialog_message)
-                .setPositiveButton(R.string.yes, onClick)
-                .setNegativeButton(R.string.no, ((dialog, which) -> dialog.cancel()));
-
-        return builder.create();
     }
 }
