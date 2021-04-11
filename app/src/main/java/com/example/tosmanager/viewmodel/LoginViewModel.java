@@ -36,9 +36,9 @@ public class LoginViewModel extends ViewModel {
         return isLogging;
     }
 
-    public Disposable logIn(dbhelper helper, Consumer<String> onNext, Consumer<Throwable> onError) {
+    public Disposable logIn(Consumer<String> onNext, Consumer<Throwable> onError) {
         isLogging.setValue(true);
-        return processLogin(helper)
+        return processLogin()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> isLogging.postValue(false))
@@ -55,32 +55,8 @@ public class LoginViewModel extends ViewModel {
         DataHolder.getInstace().setLoginSession(null);
     }
 
-    private Observable<String> processLogin(dbhelper helper) {
-        // 로그인 성공시
-
-        db = helper.getReadableDatabase();
-        String email = this.id.getValue();
-        String pwd = this.password.getValue();
-
-        // 저장된 회원정보 존부 확인
-        return Observable.create(emitter -> {
-            String sql = "select * from user where email = '"+email+"' and password= '"+pwd+"'";
-            Cursor cursor = db.rawQuery(sql, null);
-            while(cursor.moveToNext()){
-                String e = cursor.getString(0);
-                String p = cursor.getString(1);
-                Log.d("select","email :"+e+" pwd: "+p);
-            }
-
-            if(cursor.getCount()==1){
-                emitter.onNext(email+"님 환영합니다.");
-            }
-            else{
-                emitter.onError(new Throwable("로그인 정보가 틀렸습니다."));
-            }
-            cursor.close();
-            db.close();
-            emitter.onComplete();
-        });
+    private Observable<String> processLogin() {
+        // TODO: Observable.just 대신 원격 로그인 요청. 성공하면 실제 token, 실패하면 exception
+        return Observable.just(id.getValue() + password.getValue());
     }
 }

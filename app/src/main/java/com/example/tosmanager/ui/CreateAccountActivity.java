@@ -21,6 +21,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.example.tosmanager.R;
 import com.example.tosmanager.model.dbhelper;
 import com.example.tosmanager.util.ForwardText;
@@ -28,16 +31,21 @@ import com.example.tosmanager.util.SimpleClickableSpan;
 import com.example.tosmanager.viewmodel.CreateAccountViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class CreateAccountActivity extends AppCompatActivity {
     private static final String TAG = CreateAccountActivity.class.getName();
     private CreateAccountViewModel viewModel;
     // UI
     private Button createAccountButton;
-    dbhelper helper;
-
     TextInputEditText createAccountEmail;
     TextInputEditText createAccountPassword;
     TextInputEditText createAccountPasswordConfirm;
+
+    String Email;
+    String Passsword;
+    String checkpwd;
 
     TextView createAccountNotice;
 
@@ -45,9 +53,6 @@ public class CreateAccountActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
-
-        // DB객체
-        helper=new dbhelper(this);
 
         viewModel = new ViewModelProvider(this).get(CreateAccountViewModel.class);
 
@@ -66,12 +71,37 @@ public class CreateAccountActivity extends AppCompatActivity {
         // 계정 생성 버튼
         createAccountButton = findViewById(R.id.createAccountCreateButton);
         createAccountButton.setOnClickListener(v -> {
-            // 계정생성 결과 알림
-            viewModel.createAccount(helper, s -> {
-                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-                finish();
+            Email = createAccountEmail.getText().toString();
+            Passsword = createAccountPassword.getText().toString();
+            checkpwd = createAccountPasswordConfirm.getText().toString();
+
+            viewModel.createAccount(s -> {
+                if (!Passsword.equals(checkpwd)) {
+                    Toast.makeText(getApplicationContext(), "비밀번호를 일치시켜주세요", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            boolean success = jsonResponse.getBoolean("success");
+                            if (success) {
+                                Toast.makeText(getApplicationContext(), "회원가입성공", Toast.LENGTH_LONG).show();
+                                finish();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "회원가입실패", Toast.LENGTH_LONG).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                };
+                RegisterRequest registerRequest = new RegisterRequest(Email, Passsword, responseListener);
+                RequestQueue queue = Volley.newRequestQueue(CreateAccountActivity.this);
+                queue.add(registerRequest);
             }, e -> {
-                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
             });
         });
 
