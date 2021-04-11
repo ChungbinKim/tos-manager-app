@@ -1,15 +1,26 @@
 package com.example.tosmanager.viewmodel;
 
+import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.example.tosmanager.model.DataHolder;
 import com.example.tosmanager.model.LoginSession;
 import com.example.tosmanager.model.dbhelper;
+import com.example.tosmanager.ui.LoginActivity;
+import com.example.tosmanager.ui.LoginRequest;
+import com.example.tosmanager.ui.MainActivity;
+
+import org.json.JSONObject;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
@@ -24,7 +35,6 @@ public class LoginViewModel extends ViewModel {
     private final MutableLiveData<String> password = new MutableLiveData<>("");
     // state
     private final MutableLiveData<Boolean> isLogging = new MutableLiveData<>(false);
-    SQLiteDatabase db;
 
     public MutableLiveData<String> getID() {
         return id;
@@ -36,27 +46,48 @@ public class LoginViewModel extends ViewModel {
         return isLogging;
     }
 
-    public Disposable logIn(Consumer<String> onNext, Consumer<Throwable> onError) {
+    public Observable<String> logIn(Context context) {
         isLogging.setValue(true);
-        return processLogin()
+
+        String Email = id.getValue();
+        String Password = password.getValue();
+
+        Observable<String> observable = Observable.create(emitter -> {
+            // 로그인 성공시
+            Response.Listener<String> responseListener = response -> {
+                try
+                {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    boolean success = jsonResponse.getBoolean("success");
+                    if(success){
+                        //로그인 성공
+                        emitter.onNext(jsonResponse.getString("Email"));
+                        emitter.onNext(jsonResponse.getString("Password"));
+                        emitter.onComplete();
+                    }
+                    else {
+                        //로그인 실패
+                        emitter.onError(new Throwable("로그인에 실패하였습니다"));
+                    }
+
+                } catch(Exception e)
+                {
+                    emitter.onError(e);
+                    e.printStackTrace();
+                }
+            };
+            LoginRequest loginRequest = new LoginRequest(Email,Password,responseListener);
+            RequestQueue queue = Volley.newRequestQueue(context);
+            queue.add(loginRequest);
+        });
+        return observable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doFinally(() -> isLogging.postValue(false))
-                .subscribe(s -> {
-                    // 가짜 token으로 login
-                    LoginSession session = new LoginSession(s);
-                    DataHolder.getInstace().setLoginSession(session);
-
-                    onNext.accept(s);
-                }, onError);
+                .doOnNext(s -> DataHolder.getInstace().setLoginSession(new LoginSession(s)))
+                .doFinally(() -> isLogging.postValue(false));
     }
 
     public void skipLogIn() {
         DataHolder.getInstace().setLoginSession(null);
-    }
-
-    private Observable<String> processLogin() {
-        // TODO: Observable.just 대신 원격 로그인 요청. 성공하면 실제 token, 실패하면 exception
-        return Observable.just(id.getValue() + password.getValue());
     }
 }

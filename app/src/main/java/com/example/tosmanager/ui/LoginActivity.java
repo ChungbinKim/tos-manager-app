@@ -22,16 +22,17 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONObject;
 
+import java.util.ArrayDeque;
+import java.util.Queue;
+
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private LoginViewModel viewModel;
 
     // UI elements
     private Button skipButton;
-    TextInputEditText loginEmail;
-    TextInputEditText loginPassword;
-
-    String Email, Password;
+    private TextInputEditText loginEmail;
+    private TextInputEditText loginPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,53 +63,23 @@ public class LoginActivity extends AppCompatActivity {
 
     // 로그인
     public void onLogIn(View v) {
-        Email = loginEmail.getText().toString();
-        Password = loginPassword.getText().toString();
+        Queue<String> queue = new ArrayDeque<>();
 
-        viewModel.logIn(s -> {
-            // 로그인 성공시
-            Response.Listener<String> responseListener = new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    try
-                    {
-                        JSONObject jsonResponse = new JSONObject(response);
-                        boolean success = jsonResponse.getBoolean("success");
-                        if(success){
-                            //로그인 성공
-                            String Email = jsonResponse.getString("Email");
-                            String Password = jsonResponse.getString("Password");
-
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            intent.putExtra("Email", Email);
-                            intent.putExtra("Password",Password);
-
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            LoginActivity.this.startActivity(intent);
-                            finish();
-                        }
-                        else {
-                            //로그인 실패
-                            AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                            builder.setMessage("로그인에 실패하였습니다")
-                                    .setNegativeButton("다시 시도",null)
-                                    .create()
-                                    .show();
-                        }
-
-                    } catch(Exception e)
-                    {
-                        e.printStackTrace();
-                    }
-                }
-            };
-            LoginRequest loginRequest = new LoginRequest(Email,Password,responseListener);
-            RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
-            queue.add(loginRequest);
-        }, e -> {
+        viewModel.logIn(this).subscribe(s -> queue.add(s), e -> {
             // 로그인 실패
-            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-            Log.d(TAG, e.toString());
+            AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+            builder.setMessage(e.getMessage())
+                    .setNegativeButton("다시 시도",null)
+                    .create()
+                    .show();
+        }, () -> {
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.putExtra("Email", queue.poll());
+            intent.putExtra("Password",queue.poll());
+
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            LoginActivity.this.startActivity(intent);
+            finish();
         });
     }
 
