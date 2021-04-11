@@ -1,12 +1,7 @@
 package com.example.tosmanager.viewmodel;
 
 import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -15,17 +10,12 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.tosmanager.model.DataHolder;
 import com.example.tosmanager.model.LoginSession;
-import com.example.tosmanager.model.dbhelper;
-import com.example.tosmanager.ui.LoginActivity;
 import com.example.tosmanager.ui.LoginRequest;
-import com.example.tosmanager.ui.MainActivity;
 
 import org.json.JSONObject;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class LoginViewModel extends ViewModel {

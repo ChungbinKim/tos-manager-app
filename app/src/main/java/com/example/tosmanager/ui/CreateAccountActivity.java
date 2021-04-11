@@ -1,6 +1,5 @@
 package com.example.tosmanager.ui;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -9,30 +8,16 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
-import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
-import android.text.method.MovementMethod;
-import android.text.style.ClickableSpan;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.StyleSpan;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.toolbox.Volley;
 import com.example.tosmanager.R;
-import com.example.tosmanager.model.dbhelper;
 import com.example.tosmanager.util.ForwardText;
 import com.example.tosmanager.util.SimpleClickableSpan;
 import com.example.tosmanager.viewmodel.CreateAccountViewModel;
 import com.google.android.material.textfield.TextInputEditText;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class CreateAccountActivity extends AppCompatActivity {
     private static final String TAG = CreateAccountActivity.class.getName();

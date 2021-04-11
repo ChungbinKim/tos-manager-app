@@ -1,9 +1,6 @@
 package com.example.tosmanager.viewmodel;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -11,8 +8,6 @@ import androidx.lifecycle.ViewModel;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.example.tosmanager.model.dbhelper;
-import com.example.tosmanager.ui.CreateAccountActivity;
 import com.example.tosmanager.ui.RegisterRequest;
 
 import org.json.JSONException;
@@ -20,9 +15,6 @@ import org.json.JSONObject;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.ObservableOnSubscribe;
-import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class CreateAccountViewModel extends ViewModel {
