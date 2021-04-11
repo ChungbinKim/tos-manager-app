@@ -39,15 +39,11 @@ public class CreateAccountActivity extends AppCompatActivity {
     private CreateAccountViewModel viewModel;
     // UI
     private Button createAccountButton;
-    TextInputEditText createAccountEmail;
-    TextInputEditText createAccountPassword;
-    TextInputEditText createAccountPasswordConfirm;
+    private TextInputEditText createAccountEmail;
+    private TextInputEditText createAccountPassword;
+    private TextInputEditText createAccountPasswordConfirm;
 
-    String Email;
-    String Passsword;
-    String checkpwd;
-
-    TextView createAccountNotice;
+    private TextView createAccountNotice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,37 +67,11 @@ public class CreateAccountActivity extends AppCompatActivity {
         // 계정 생성 버튼
         createAccountButton = findViewById(R.id.createAccountCreateButton);
         createAccountButton.setOnClickListener(v -> {
-            Email = createAccountEmail.getText().toString();
-            Passsword = createAccountPassword.getText().toString();
-            checkpwd = createAccountPasswordConfirm.getText().toString();
-
-            viewModel.createAccount(s -> {
-                if (!Passsword.equals(checkpwd)) {
-                    Toast.makeText(getApplicationContext(), "비밀번호를 일치시켜주세요", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                Response.Listener<String> responseListener = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonResponse = new JSONObject(response);
-                            boolean success = jsonResponse.getBoolean("success");
-                            if (success) {
-                                Toast.makeText(getApplicationContext(), "회원가입성공", Toast.LENGTH_LONG).show();
-                                finish();
-                            } else {
-                                Toast.makeText(getApplicationContext(), "회원가입실패", Toast.LENGTH_LONG).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                };
-                RegisterRequest registerRequest = new RegisterRequest(Email, Passsword, responseListener);
-                RequestQueue queue = Volley.newRequestQueue(CreateAccountActivity.this);
-                queue.add(registerRequest);
+            viewModel.createAccount(this).subscribe(s -> {
+                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+                finish();
             }, e -> {
+                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
             });
         });
 
