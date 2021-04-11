@@ -1,6 +1,5 @@
 package com.example.tosmanager.ui;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -9,20 +8,12 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
-import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
-import android.text.method.MovementMethod;
-import android.text.style.ClickableSpan;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.StyleSpan;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tosmanager.R;
-import com.example.tosmanager.model.dbhelper;
 import com.example.tosmanager.util.ForwardText;
 import com.example.tosmanager.util.SimpleClickableSpan;
 import com.example.tosmanager.viewmodel.CreateAccountViewModel;
@@ -33,21 +24,16 @@ public class CreateAccountActivity extends AppCompatActivity {
     private CreateAccountViewModel viewModel;
     // UI
     private Button createAccountButton;
-    dbhelper helper;
+    private TextInputEditText createAccountEmail;
+    private TextInputEditText createAccountPassword;
+    private TextInputEditText createAccountPasswordConfirm;
 
-    TextInputEditText createAccountEmail;
-    TextInputEditText createAccountPassword;
-    TextInputEditText createAccountPasswordConfirm;
-
-    TextView createAccountNotice;
+    private TextView createAccountNotice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
-
-        // DB객체
-        helper=new dbhelper(this);
 
         viewModel = new ViewModelProvider(this).get(CreateAccountViewModel.class);
 
@@ -66,9 +52,8 @@ public class CreateAccountActivity extends AppCompatActivity {
         // 계정 생성 버튼
         createAccountButton = findViewById(R.id.createAccountCreateButton);
         createAccountButton.setOnClickListener(v -> {
-            // 계정생성 결과 알림
-            viewModel.createAccount(helper, s -> {
-                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+            viewModel.createAccount(this).subscribe(s -> {
+                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
                 finish();
             }, e -> {
                 Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
