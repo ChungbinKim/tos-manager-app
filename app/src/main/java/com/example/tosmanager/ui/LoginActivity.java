@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -21,6 +23,7 @@ import java.util.Queue;
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private LoginViewModel viewModel;
+    private SharedPreferences sharedPreferences;
 
     // UI elements
     private Button loginButton;
@@ -37,7 +40,10 @@ public class LoginActivity extends AppCompatActivity {
 
         viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         setUpObservers();
+
         getSupportActionBar().hide();
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         // 이메일 입력창
         loginEmail = findViewById(R.id.loginEmail);
@@ -65,6 +71,7 @@ public class LoginActivity extends AppCompatActivity {
 
     // 로그인
     public void onLogIn(View v) {
+        sharedPreferences.edit().putBoolean("isAccountless", false).apply();
         Queue<String> queue = new ArrayDeque<>();
 
         viewModel.logIn(this).subscribe(s -> queue.add(s), e -> {
@@ -87,17 +94,23 @@ public class LoginActivity extends AppCompatActivity {
 
     // 건너뛰기
     public void onSkipLogIn(View v) {
-        viewModel.skipLogIn();
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        finish();
+        skipLogIn();
     }
 
     // 비밀번호 찾기
     public void onRecoverPassword(View v) {
         Intent intent = new Intent(this, RecoverPasswordActivity.class);
         startActivity(intent);
+    }
+
+    private void skipLogIn() {
+        viewModel.skipLogIn();
+        sharedPreferences.edit().putBoolean("isAccountless", true).apply();
+
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
     }
 
     private void setUpObservers() {
