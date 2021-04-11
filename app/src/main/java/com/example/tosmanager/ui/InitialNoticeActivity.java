@@ -16,11 +16,11 @@ import com.example.tosmanager.R;
 import com.example.tosmanager.util.ForwardText;
 import com.example.tosmanager.viewmodel.InitialNoticeViewModel;
 import com.google.android.material.textfield.TextInputEditText;
+import com.ms.square.android.expandabletextview.ExpandableTextView;
 
 public class InitialNoticeActivity extends AppCompatActivity {
     private InitialNoticeViewModel viewModel;
     // UI
-    private TextView initialNoticeText;
     private Button initialNoticeAgreeButton;
 
     private SharedPreferences sharedPreferences;
@@ -34,16 +34,21 @@ public class InitialNoticeActivity extends AppCompatActivity {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         getSupportActionBar().hide();
 
-        boolean isAgreed = sharedPreferences.getBoolean("is-agreed", false);
-        if (isAgreed) {
+        if (sharedPreferences.getBoolean("is-agreed", false)) {
             proceed();
             return;
         }
 
         // 고지 텍스트
-        initialNoticeText = findViewById(R.id.initialNoticeText);
+        TextView initialNoticeText = findViewById(R.id.initialNoticeText);
         initialNoticeText.setText(Html.fromHtml(getString(R.string.text_notice)));
 
+        // 사용 사례 텍스트
+        ExpandableTextView useCases = findViewById(R.id.InitialNoticeUseCases);
+        useCases.setText(Html.fromHtml(getString(R.string.text_notice_use_cases)));
+        // 동의 텍스트
+        TextView lastText = findViewById(R.id.initialNoticeTextLast);
+        lastText.setText(Html.fromHtml(getString(R.string.text_notice_last)));
         // 동의 텍스트창
         TextInputEditText initialNoticeTextField = findViewById(R.id.initialNoticeTextField);
         initialNoticeTextField.addTextChangedListener(new ForwardText(viewModel.getConfirmText()));
