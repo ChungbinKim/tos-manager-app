@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -30,9 +31,12 @@ public class LoginActivity extends AppCompatActivity {
     private LoginViewModel viewModel;
 
     // UI elements
+    private Button loginButton;
     private Button skipButton;
     private TextInputEditText loginEmail;
     private TextInputEditText loginPassword;
+    private TextView createAccount;
+    private TextView recoverPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +55,14 @@ public class LoginActivity extends AppCompatActivity {
         loginPassword = findViewById(R.id.loginPassword);
         loginPassword.addTextChangedListener(new ForwardText(viewModel.getPassword()));
 
+        // 로그인 버튼
+        loginButton = findViewById(R.id.loginButton);
         // 건너뛰기
         skipButton = findViewById(R.id.loginSkipButton);
+        // 계정 생성
+        createAccount = findViewById(R.id.loginCreateAccount);
+        // 계정 복구
+        recoverPassword = findViewById(R.id.loginRecoverPassword);
     }
 
     // 계정 생성
@@ -100,7 +110,11 @@ public class LoginActivity extends AppCompatActivity {
 
     private void setUpObservers() {
         viewModel.getIsLogging().observe(this, b -> {
+            // 로그인중 버튼 비활성화
+            loginButton.setEnabled(!b);
             skipButton.setEnabled(!b);
+            createAccount.setEnabled(!b);
+            recoverPassword.setEnabled(!b);
         });
     }
 }

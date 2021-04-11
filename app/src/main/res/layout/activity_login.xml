@@ -80,7 +80,7 @@
         app:layout_constraintTop_toBottomOf="@+id/divider" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/loginButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -133,7 +133,7 @@
         android:layout_marginRight="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button">
+        app:layout_constraintTop_toBottomOf="@+id/loginButton">
 
         <TextView
             android:id="@+id/textView4"
@@ -142,8 +142,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:text="@string/separator"
-            app:layout_constraintBaseline_toBaselineOf="@+id/textView"
-            app:layout_constraintStart_toEndOf="@+id/textView" />
+            app:layout_constraintBaseline_toBaselineOf="@+id/loginCreateAccount"
+            app:layout_constraintStart_toEndOf="@+id/loginCreateAccount" />
 
         <TextView
             android:id="@+id/loginRecoverPassword"
@@ -160,7 +160,7 @@
             app:layout_constraintStart_toEndOf="@+id/textView4" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/loginCreateAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
