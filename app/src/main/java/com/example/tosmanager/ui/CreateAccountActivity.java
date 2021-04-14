@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
+import android.util.TypedValue;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -79,8 +81,12 @@ public class CreateAccountActivity extends AppCompatActivity {
             SpannableString str = new SpannableString(strings[i]);
 
             if (i == 1) {
+                // Theme의 primary color 가져오기
+                TypedValue typedValue = new TypedValue();
+                getTheme().resolveAttribute(R.attr.colorPrimary, typedValue, true);
+                int color = typedValue.data;
+
                 // 링크 생성
-                int color = getResources().getColor(R.color.design_default_color_primary);
                 str.setSpan(new SimpleClickableSpan(color, v -> {
                     Intent intent = new Intent(this, PrivacyPolicyActivity.class);
                     startActivity(intent);
