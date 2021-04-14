@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.ToSManager" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.ToSManager" parent="Theme.MaterialComponents.DayNight">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/green</item>
         <item name="colorPrimaryVariant">@color/green_dark</item>
@@ -11,6 +11,26 @@
         <item name="colorOnSecondary">@color/white</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+        <!-- Action bar -->
+        <item name="actionBarStyle">@style/Widget.TosManager.ActionBar</item>
+    </style>
+
+    <style name="Widget.TosManager.ActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <!-- Action bar color -->
+        <item name="background">@color/white</item>
+    </style>
+
+    <style name="Widget.TosManager.Button" parent="TextAppearance.AppCompat.Button">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:letterSpacing">0.1</item>
+    </style>
+    <style name="Widget.TosManager.Button.Alt">
+        <item name="android:backgroundTint">?attr/colorSecondary</item>
+        <item name="android:textColor">?attr/colorOnSecondary</item>
+    </style>
+    <style name="Widget.TosManager.Text.Clickable" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">?attr/colorPrimary</item>
     </style>
 </resources>
