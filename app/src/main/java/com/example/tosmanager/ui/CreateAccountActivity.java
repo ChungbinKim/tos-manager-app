@@ -62,14 +62,15 @@ public class CreateAccountActivity extends AppCompatActivity {
             });
         });
 
-        viewModel.getIsCreatingAccount().observe(this, b -> {
-            createAccountButton.setEnabled(!b);
-        });
-
         // 계정생성 주의사항
         createAccountNotice = findViewById(R.id.createAccountNotice);
         createAccountNotice.setText(createNotice());
         createAccountNotice.setMovementMethod(LinkMovementMethod.getInstance());
+
+        viewModel.getIsCreatingAccount().observe(this, b -> {
+            createAccountButton.setEnabled(!b);
+            createAccountNotice.setEnabled(!b);
+        });
     }
 
     // 계정생성 주의사항 텍스트 생성
