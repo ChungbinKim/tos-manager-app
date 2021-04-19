@@ -73,6 +73,8 @@
 
     <!-- ToS Details Activity -->
     <string name="title_tos_details">요약 결과</string>
+    <string name="action_delete_tos">약관 삭제</string>
+    <string name="delete_tos_dialog_message">해당 약관을 삭제하시겠습니까?</string>
 
     <!-- Privacy Policy -->
     <string name="privacy_policy_text">
