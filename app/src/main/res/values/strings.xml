@@ -60,6 +60,8 @@
 
     <!-- Add ToS Activity -->
     <string name="text_input_tos_directly">약관을 직접 입력하세요.</string>
+    <string name="text_summarize">요약하기</string>
+    <string name="text_summarize_dialog_message">입력한 약관을 요약하시겠습니까?</string>
     <string name="text_input_tos_by_share">
 <![CDATA[
 <p>
