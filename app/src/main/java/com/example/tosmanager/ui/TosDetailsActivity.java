@@ -12,5 +12,6 @@ public class TosDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tos_details);
+        getSupportActionBar().setTitle(R.string.title_tos_details);
     }
 }

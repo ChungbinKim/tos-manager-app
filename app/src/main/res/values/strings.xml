@@ -59,6 +59,7 @@
     <string name="version_info_title">버전 정보</string>
 
     <!-- Add ToS Activity -->
+    <string name="title_input_tos">약관 입력</string>
     <string name="text_input_tos_directly">약관을 직접 입력하세요.</string>
     <string name="text_summarize">요약하기</string>
     <string name="text_summarize_dialog_message">입력한 약관을 요약하시겠습니까?</string>
@@ -69,6 +70,9 @@
 </p>
 ]]>
     </string>
+
+    <!-- ToS Details Activity -->
+    <string name="title_tos_details">요약 결과</string>
 
     <!-- Privacy Policy -->
     <string name="privacy_policy_text">

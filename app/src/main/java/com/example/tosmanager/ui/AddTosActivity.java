@@ -19,6 +19,7 @@ public class AddTosActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_tos);
+        getSupportActionBar().setTitle(R.string.title_input_tos);
 
         // 설명 text
         TextView textInputByShare = findViewById(R.id.addTosInputByShare);
