@@ -58,6 +58,16 @@
     <string name="header_miscellaneous">기타</string>
     <string name="version_info_title">버전 정보</string>
 
+    <!-- Add ToS Activity -->
+    <string name="text_input_tos_directly">약관을 직접 입력하세요.</string>
+    <string name="text_input_tos_by_share">
+<![CDATA[
+<p>
+텍스트 선택, 또는 인터넷 브라우저로 약관 페이지에 들어간 뒤, <b>공유</b>기능에서 <font color="red"><b>요약하기</b></font>를 선택하세요
+</p>
+]]>
+    </string>
+
     <!-- Privacy Policy -->
     <string name="privacy_policy_text">
 <![CDATA[
