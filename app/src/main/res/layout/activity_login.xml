@@ -65,13 +65,12 @@
 
     <Button
         android:id="@+id/loginSkipButton"
+        style="@style/Widget.TosManager.Button.Alt"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
         android:onClick="onSkipLogIn"
         android:text="@string/action_skip_sign_in"
         app:backgroundTint="@color/design_default_color_secondary"
@@ -81,13 +80,12 @@
 
     <Button
         android:id="@+id/loginButton"
+        style="@style/Widget.TosManager.Button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
         android:onClick="onLogIn"
         android:text="@string/action_sign_in"
         app:layout_constraintEnd_toEndOf="parent"
@@ -155,7 +153,7 @@
             android:focusable="true"
             android:onClick="onRecoverPassword"
             android:text="@string/action_recover_password"
-            android:textColor="@color/design_default_color_primary"
+            style="@style/Widget.TosManager.Text.Clickable"
             app:layout_constraintBaseline_toBaselineOf="@+id/textView4"
             app:layout_constraintStart_toEndOf="@+id/textView4" />
 
@@ -167,7 +165,7 @@
             android:focusable="true"
             android:onClick="onCreateAccount"
             android:text="@string/action_create_account"
-            android:textColor="@color/design_default_color_primary"
+            style="@style/Widget.TosManager.Text.Clickable"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
