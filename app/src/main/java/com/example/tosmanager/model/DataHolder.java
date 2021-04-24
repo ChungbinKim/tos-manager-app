@@ -28,7 +28,7 @@ public class DataHolder {
     // Singleton
     private static final DataHolder dataHolder = new DataHolder();
     private DataHolder() {}
-    public static DataHolder getInstace() {
+    public static DataHolder getInstance() {
         return dataHolder;
     }
 }

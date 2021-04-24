@@ -73,11 +73,11 @@ public class LoginViewModel extends ViewModel {
         return observable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(s -> DataHolder.getInstace().setLoginSession(new LoginSession(s)))
+                .doOnNext(s -> DataHolder.getInstance().setLoginSession(new LoginSession(s)))
                 .doFinally(() -> isLogging.postValue(false));
     }
 
     public void skipLogIn() {
-        DataHolder.getInstace().setLoginSession(null);
+        DataHolder.getInstance().setLoginSession(null);
     }
 }

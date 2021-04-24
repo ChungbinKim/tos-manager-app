@@ -27,7 +27,7 @@ public class ConfigurationFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey);
 
-        DataHolder dataHolder = DataHolder.getInstace();
+        DataHolder dataHolder = DataHolder.getInstance();
 
         // 가져오기
         Preference importPreference = findPreference("import");
