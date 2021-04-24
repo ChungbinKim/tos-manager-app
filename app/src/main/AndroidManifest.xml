@@ -22,7 +22,10 @@
             android:name=".ui.RecoverPasswordActivity"
             android:parentActivityName=".ui.LoginActivity">
         </activity>
-        <activity android:name=".ui.MainActivity" />
+        <activity android:name=".ui.MainActivity">
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
+        </activity>
         <activity
             android:name=".ui.CreateAccountActivity"
             android:parentActivityName=".ui.LoginActivity" />

@@ -42,6 +42,7 @@
     <string name="sort_by_recency_in_reverse">오래된 순</string>
     <string name="sort_by_name">이름 순(A-Z)</string>
     <string name="sort_by_name_in_reverse">이름 순(Z-A)</string>
+    <string name="text_my_tos_search_hint">서비스 검색</string>
 
     <!-- Configuration Fragment -->
     <string name="header_ui_ux">UI/UX</string>

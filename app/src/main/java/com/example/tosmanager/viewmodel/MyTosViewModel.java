@@ -21,14 +21,22 @@ import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MyTosViewModel extends ViewModel {
-    private MutableLiveData<Integer> sortID = new MutableLiveData<>(R.id.sortByRecency);
     private ArrayList<CharSequence> serviceNames = new ArrayList<>();
+    private MutableLiveData<Integer> sortID = new MutableLiveData<>(R.id.sortByRecency);
+    private MutableLiveData<String> searchKeyword = new MutableLiveData<>("");
+    private MutableLiveData<Boolean> isOnSearch = new MutableLiveData<>(false);
 
+    public ArrayList<CharSequence> getServiceNames() {
+        return serviceNames;
+    }
     public MutableLiveData<Integer> getSortID() {
         return sortID;
     }
-    public ArrayList<CharSequence> getServiceNames() {
-        return serviceNames;
+    public MutableLiveData<String> getSearchKeyword() {
+        return searchKeyword;
+    }
+    public MutableLiveData<Boolean> getIsOnSearch() {
+        return isOnSearch;
     }
 
     public Observable<CharSequence> fetchServiceNames() {
