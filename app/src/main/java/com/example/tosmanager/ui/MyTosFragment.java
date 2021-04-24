@@ -79,6 +79,7 @@ public class MyTosFragment extends Fragment {
                 viewModel.getSortID().setValue(item.getItemId());
                 return true;
             });
+            sortMenu.getMenu().findItem(viewModel.getSortID().getValue()).setChecked(true);
             sortMenu.show();
         });
         sortBy.setEnabled(false);
