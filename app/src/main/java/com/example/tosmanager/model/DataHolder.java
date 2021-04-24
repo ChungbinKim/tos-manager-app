@@ -10,7 +10,6 @@ import io.reactivex.rxjava3.core.Observable;
 public class DataHolder {
     // TODO: session token은 여기 있으면 안 되고, 영구 disk에 저장. 아래 getter, setter 수정.
     private LoginSession loginSession = null;
-    private ArrayList<TermsSummary> summaryList = new ArrayList<>();
 
     @Nullable
     public LoginSession getLoginSession() {
@@ -18,11 +17,6 @@ public class DataHolder {
     }
     public void setLoginSession(@Nullable LoginSession loginSession) {
         this.loginSession = loginSession;
-    }
-
-    @Nullable
-    public ArrayList<TermsSummary> getSummaryList() {
-        return summaryList;
     }
 
     // Singleton
