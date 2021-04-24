@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ImageView;
 
 import androidx.annotation.DrawableRes;
@@ -31,6 +32,8 @@ public class MyTosFragment extends Fragment {
 
     private LinearLayoutManager linearLayoutManager;
     private GridLayoutManager gridLayoutManager;
+    private TosListAdapter listViewAdapter;
+    private TosListAdapter gridViewAdapter;
 
     public MyTosFragment() {
         // Required empty public constructor
@@ -50,8 +53,13 @@ public class MyTosFragment extends Fragment {
 
         preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
 
+        // TODO 실제 data로 대체
+        String[] data = new String[]{"서비스 A", "서비스 B", "서비스 C", "서비스 D"};
+
         linearLayoutManager = new LinearLayoutManager(view.getContext());
         gridLayoutManager = new GridLayoutManager(view.getContext(), 3);
+        listViewAdapter = new TosListAdapter(R.layout.fragment_tos_list_item, data);
+        gridViewAdapter = new TosListAdapter(R.layout.fragment_tos_grid_item, data);
 
         // list/grid view 변환 버튼
         toggleLayout = view.findViewById(R.id.myTosLayout);
@@ -62,7 +70,6 @@ public class MyTosFragment extends Fragment {
 
         // 약관 목록
         myTosList = view.findViewById(R.id.myTosList);
-        myTosList.setAdapter(new TosListAdapter(new String[]{"서비스 A", "서비스 B", "C", "D"}));
         updateLayout();
 
         return view;
@@ -80,13 +87,17 @@ public class MyTosFragment extends Fragment {
 
     private void updateLayout() {
         RecyclerView.LayoutManager layout = linearLayoutManager;
+        RecyclerView.Adapter<TosViewHolder> adapter = listViewAdapter;
         @DrawableRes int iconID = R.drawable.ic_baseline_view_module_24;
+
         if (isGridLayout()) {
             layout = gridLayoutManager;
+            adapter = gridViewAdapter;
             iconID = R.drawable.ic_baseline_view_list_24;
         }
 
         myTosList.setLayoutManager(layout);
+        myTosList.setAdapter(adapter);
         toggleLayout.setImageResource(iconID);
     }
 
