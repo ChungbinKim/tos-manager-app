@@ -52,34 +52,22 @@ public class ConfigurationFragment extends PreferenceFragmentCompat {
             return true;
         });
 
-        // 로그인/로그아웃
+        // 로그아웃
         Preference loginOutPreference = findPreference("loginOut");
-        if (dataHolder.getLoginSession() != null) {
-            loginOutPreference.setTitle(getString(R.string.log_out_title));
+        loginOutPreference.setOnPreferenceClickListener(preference -> {
+            promptResult = false;
+            CreateDialog.createPrompt(getActivity(), R.string.log_out_dialog_message, (dialog, which) -> {
+                dataHolder.setLoginSession(null);
 
-            loginOutPreference.setOnPreferenceClickListener(preference -> {
-                promptResult = false;
-                CreateDialog.createPrompt(getActivity(), R.string.log_out_dialog_message, (dialog, which) -> {
-                    dataHolder.setLoginSession(null);
-
-                    Intent intent = new Intent(getActivity(), LoginActivity.class);
-                    startActivity(intent);
-                    getActivity().finish();
-
-                    promptResult = true;
-                }).show();
-
-                return promptResult;
-            });
-        } else {
-            loginOutPreference.setTitle(getString(R.string.log_in_title));
-
-            loginOutPreference.setOnPreferenceClickListener(preference -> {
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
-                return true;
-            });
-        }
+                getActivity().finish();
+
+                promptResult = true;
+            }).show();
+
+            return promptResult;
+        });
 
         // 버전 설정
         Preference versionPreference = findPreference("version");

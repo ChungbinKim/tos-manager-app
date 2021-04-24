@@ -55,7 +55,6 @@
     <string name="embedded_calendar_summary">이 설정을 끄면 일정은 기본 달력 어플리케이션에 저장됩니다.</string>
 
     <string name="header_account">계정</string>
-    <string name="log_in_title">로그인</string>
     <string name="log_out_title">로그아웃</string>
     <string name="log_out_dialog_message">정말로 로그아웃 하시겠습니까?</string>
 

@@ -27,7 +27,6 @@ public class LoginActivity extends AppCompatActivity {
 
     // UI elements
     private Button loginButton;
-    private Button skipButton;
     private TextInputEditText loginEmail;
     private TextInputEditText loginPassword;
     private TextView createAccount;
@@ -55,8 +54,6 @@ public class LoginActivity extends AppCompatActivity {
 
         // 로그인 버튼
         loginButton = findViewById(R.id.loginButton);
-        // 건너뛰기
-        skipButton = findViewById(R.id.loginSkipButton);
         // 계정 생성
         createAccount = findViewById(R.id.loginCreateAccount);
         // 계정 복구
@@ -92,11 +89,6 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    // 건너뛰기
-    public void onSkipLogIn(View v) {
-        skipLogIn();
-    }
-
     // 비밀번호 찾기
     public void onRecoverPassword(View v) {
         Intent intent = new Intent(this, RecoverPasswordActivity.class);
@@ -117,7 +109,6 @@ public class LoginActivity extends AppCompatActivity {
         viewModel.getIsLogging().observe(this, b -> {
             // 로그인중 버튼 비활성화
             loginButton.setEnabled(!b);
-            skipButton.setEnabled(!b);
             createAccount.setEnabled(!b);
             recoverPassword.setEnabled(!b);
         });
