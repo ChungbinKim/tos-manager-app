@@ -9,11 +9,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tosmanager.R;
 
+import java.util.ArrayList;
+
 public class TosListAdapter extends RecyclerView.Adapter<TosViewHolder> {
     @LayoutRes private int layoutID;
-    private String[] localDataSet;
+    private ArrayList<CharSequence> localDataSet;
 
-    public TosListAdapter(int layoutID, String[] dataSet) {
+    public TosListAdapter(int layoutID, ArrayList<CharSequence> dataSet) {
         this.layoutID = layoutID;
         localDataSet = dataSet;
     }
@@ -28,12 +30,12 @@ public class TosListAdapter extends RecyclerView.Adapter<TosViewHolder> {
 
     @Override
     public void onBindViewHolder(TosViewHolder tosViewHolder, final int position) {
-        tosViewHolder.getTextView().setText(localDataSet[position]);
+        tosViewHolder.getTextView().setText(localDataSet.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return localDataSet.length;
+        return localDataSet.size();
     }
 }
 

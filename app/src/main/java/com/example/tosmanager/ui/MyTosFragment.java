@@ -12,18 +12,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tosmanager.R;
+import com.example.tosmanager.viewmodel.MyTosViewModel;
+import com.example.tosmanager.viewmodel.RecoverPasswordViewModel;
+
+import java.util.ArrayList;
 
 public class MyTosFragment extends Fragment {
+    private MyTosViewModel viewModel;
     private static final String TAG = MyTosFragment.class.getName();
     private SharedPreferences preferences;
     // UI
@@ -51,15 +59,11 @@ public class MyTosFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_tos, container, false);
 
+        viewModel = new ViewModelProvider(this).get(MyTosViewModel.class);
         preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
-
-        // TODO 실제 data로 대체
-        String[] data = new String[]{"서비스 A", "서비스 B", "서비스 C", "서비스 D"};
 
         linearLayoutManager = new LinearLayoutManager(view.getContext());
         gridLayoutManager = new GridLayoutManager(view.getContext(), 3);
-        listViewAdapter = new TosListAdapter(R.layout.fragment_tos_list_item, data);
-        gridViewAdapter = new TosListAdapter(R.layout.fragment_tos_grid_item, data);
 
         // list/grid view 변환 버튼
         toggleLayout = view.findViewById(R.id.myTosLayout);
@@ -67,10 +71,24 @@ public class MyTosFragment extends Fragment {
             preferences.edit().putBoolean("isGridLayout", !isGridLayout()).apply();
             updateLayout();
         });
+        toggleLayout.setEnabled(false);
 
         // 약관 목록
         myTosList = view.findViewById(R.id.myTosList);
-        updateLayout();
+
+        // 데이터 접근
+        ArrayList<CharSequence> data = new ArrayList<>();
+        viewModel.fetchServiceNames().subscribe(s -> {
+            data.add(s);
+        }, e -> {
+            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+        }, () -> {
+            listViewAdapter = new TosListAdapter(R.layout.fragment_tos_list_item, data);
+            gridViewAdapter = new TosListAdapter(R.layout.fragment_tos_grid_item, data);
+
+            updateLayout();
+            toggleLayout.setEnabled(true);
+        });
 
         return view;
     }
