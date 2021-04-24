@@ -92,7 +92,6 @@ public class MyTosFragment extends Fragment {
 
         // 데이터 접근
         viewModel.fetchServiceNames().subscribe(s -> {
-            viewModel.getServiceNames().add(s);
         }, e -> {
             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
         }, () -> {

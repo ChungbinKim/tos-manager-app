@@ -32,10 +32,12 @@ public class MyTosViewModel extends ViewModel {
     }
 
     public Observable<CharSequence> fetchServiceNames() {
+        serviceNames.clear();
         // TODO DB에서 가져오기
         return Observable.just("서비스 A", "서비스 B", "서비스 C", "서비스 D")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext(s -> serviceNames.add(s))
                 .map(s -> s);
     }
 
