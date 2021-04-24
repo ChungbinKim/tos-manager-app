@@ -3,22 +3,19 @@ package com.example.tosmanager.ui;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.DrawableRes;
-import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,7 +23,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tosmanager.R;
 import com.example.tosmanager.viewmodel.MyTosViewModel;
-import com.example.tosmanager.viewmodel.RecoverPasswordViewModel;
 
 import java.util.ArrayList;
 
@@ -37,6 +33,7 @@ public class MyTosFragment extends Fragment {
     // UI
     private RecyclerView myTosList;
     private ImageView toggleLayout;
+    private ImageView sortBy;
 
     private LinearLayoutManager linearLayoutManager;
     private GridLayoutManager gridLayoutManager;
@@ -73,21 +70,38 @@ public class MyTosFragment extends Fragment {
         });
         toggleLayout.setEnabled(false);
 
+        // 정렬 순서 메뉴
+        sortBy = view.findViewById(R.id.myTosSortBy);
+        sortBy.setOnClickListener(v -> {
+            PopupMenu sortMenu = new PopupMenu(view.getContext(), v);
+            sortMenu.getMenuInflater().inflate(R.menu.sort_by, sortMenu.getMenu());
+            sortMenu.setOnMenuItemClickListener(item -> {
+                viewModel.getSortID().setValue(item.getItemId());
+                return true;
+            });
+            sortMenu.show();
+        });
+        sortBy.setEnabled(false);
+
+        viewModel.getSortID().observe(getViewLifecycleOwner(), id -> {
+            updateLayout();
+        });
+
         // 약관 목록
         myTosList = view.findViewById(R.id.myTosList);
 
         // 데이터 접근
-        ArrayList<CharSequence> data = new ArrayList<>();
         viewModel.fetchServiceNames().subscribe(s -> {
-            data.add(s);
+            viewModel.getServiceNames().add(s);
         }, e -> {
             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
         }, () -> {
-            listViewAdapter = new TosListAdapter(R.layout.fragment_tos_list_item, data);
-            gridViewAdapter = new TosListAdapter(R.layout.fragment_tos_grid_item, data);
+            listViewAdapter = new TosListAdapter(R.layout.fragment_tos_list_item, viewModel.getServiceNames());
+            gridViewAdapter = new TosListAdapter(R.layout.fragment_tos_grid_item, viewModel.getServiceNames());
 
             updateLayout();
             toggleLayout.setEnabled(true);
+            sortBy.setEnabled(true);
         });
 
         return view;
@@ -104,6 +118,8 @@ public class MyTosFragment extends Fragment {
     }
 
     private void updateLayout() {
+        viewModel.sortServices();
+
         RecyclerView.LayoutManager layout = linearLayoutManager;
         RecyclerView.Adapter<TosViewHolder> adapter = listViewAdapter;
         @DrawableRes int iconID = R.drawable.ic_baseline_view_module_24;

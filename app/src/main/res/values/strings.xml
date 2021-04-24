@@ -38,6 +38,10 @@
 
     <!-- My TOS Fragment -->
     <string name="my_tos_list_header">목록</string>
+    <string name="sort_by_recency">최신 순</string>
+    <string name="sort_by_recency_in_reverse">오래된 순</string>
+    <string name="sort_by_name">이름 순(A-Z)</string>
+    <string name="sort_by_name_in_reverse">이름 순(Z-A)</string>
 
     <!-- Configuration Fragment -->
     <string name="header_ui_ux">UI/UX</string>
