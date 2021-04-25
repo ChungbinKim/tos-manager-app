@@ -68,11 +68,7 @@ public class InitialNoticeActivity extends AppCompatActivity {
         sharedPreferences.edit().putBoolean("is-agreed", true).apply();
 
         Intent intent;
-        if (sharedPreferences.getBoolean("isAccountless", false)) {
-            intent = new Intent(this, MainActivity.class);
-        } else {
-            intent = new Intent(this, LoginActivity.class);
-        }
+        intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 }

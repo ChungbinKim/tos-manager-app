@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tosmanager.R;
+import com.example.tosmanager.util.ColorUtil;
 import com.example.tosmanager.util.ForwardText;
 import com.example.tosmanager.util.SimpleClickableSpan;
 import com.example.tosmanager.viewmodel.CreateAccountViewModel;
@@ -83,9 +84,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
             if (i == 1) {
                 // Theme의 primary color 가져오기
-                TypedValue typedValue = new TypedValue();
-                getTheme().resolveAttribute(R.attr.colorPrimary, typedValue, true);
-                int color = typedValue.data;
+                int color = ColorUtil.getThemeColor(R.attr.colorPrimary, this);
 
                 // 링크 생성
                 str.setSpan(new SimpleClickableSpan(color, v -> {

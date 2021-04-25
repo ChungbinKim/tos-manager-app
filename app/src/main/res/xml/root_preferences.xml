@@ -38,7 +38,7 @@
 
         <Preference
             app:key="loginOut"
-            app:title="@string/log_in_title" />
+            app:title="@string/log_out_title" />
 
     </PreferenceCategory>
 
