@@ -26,6 +26,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tosmanager.R;
 import com.example.tosmanager.viewmodel.MyTosViewModel;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -37,6 +39,7 @@ public class MyTosFragment extends Fragment {
     private RecyclerView myTosList;
     private ImageView toggleLayout;
     private ImageView sortBy;
+    private FloatingActionButton addTos;
 
     private LinearLayoutManager linearLayoutManager;
     private GridLayoutManager gridLayoutManager;
@@ -94,6 +97,21 @@ public class MyTosFragment extends Fragment {
         // 약관 목록
         myTosList = view.findViewById(R.id.myTosList);
 
+        // 약관 추가 버튼
+        addTos = view.findViewById(R.id.myTosAdd);
+
+        BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.bottomNavigationView);
+
+        viewModel.getIsOnSearch().observe(getViewLifecycleOwner(), b -> {
+            if (b) {
+                addTos.hide();
+                bottomNavigationView.setVisibility(View.GONE);
+            } else {
+                addTos.show();
+                bottomNavigationView.setVisibility(View.VISIBLE);
+            }
+        });
+
         // 데이터 접근
         viewModel.fetchServiceNames().subscribe(s -> {
         }, e -> {
@@ -131,7 +149,7 @@ public class MyTosFragment extends Fragment {
                 return true;
             }
         });
-        searchView.setOnFocusChangeListener((v, hasFocus) -> {
+        searchView.setOnQueryTextFocusChangeListener((v, hasFocus) -> {
             viewModel.getIsOnSearch().setValue(hasFocus);
         });
 
