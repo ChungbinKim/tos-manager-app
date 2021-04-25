@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,6 +25,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tosmanager.R;
+import com.example.tosmanager.util.ColorUtil;
 import com.example.tosmanager.viewmodel.MyTosViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -130,8 +132,9 @@ public class MyTosFragment extends Fragment {
         }, () -> {
             viewModel.updateListItems();
 
-            listViewAdapter = new TosListAdapter(R.layout.fragment_tos_list_item, viewModel.getListItems());
-            gridViewAdapter = new TosListAdapter(R.layout.fragment_tos_grid_item, viewModel.getListItems());
+            int color = ColorUtil.getThemeColor(R.attr.colorSecondary, getContext());
+            listViewAdapter = new TosListAdapter(R.layout.fragment_tos_list_item, viewModel.getListItems(), color);
+            gridViewAdapter = new TosListAdapter(R.layout.fragment_tos_grid_item, viewModel.getListItems(), color);
             updateLayout();
 
             toggleLayout.setEnabled(true);

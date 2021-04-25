@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.LayoutRes;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,11 +22,13 @@ import java.util.ArrayList;
 
 public class TosListAdapter extends RecyclerView.Adapter<TosViewHolder> {
     @LayoutRes private int layoutID;
+    @ColorInt private int color;
     private ArrayList<SearchResultItem> dataSet;
 
-    public TosListAdapter(int layoutID, ArrayList<SearchResultItem> dataSet) {
+    public TosListAdapter(int layoutID, ArrayList<SearchResultItem> dataSet, @ColorInt int color) {
         this.layoutID = layoutID;
         updateDataSet(dataSet);
+        this.color = color;
     }
 
     public void updateDataSet(ArrayList<SearchResultItem> dataSet) {
@@ -47,7 +50,7 @@ public class TosListAdapter extends RecyclerView.Adapter<TosViewHolder> {
 
         Spannable spannable = new SpannableStringBuilder(item.getServiceName());
         for (Pair<Integer, Integer> range : item.getHighlightRanges()) {
-            spannable.setSpan(new ForegroundColorSpan(0xffff0000), range.first, range.second, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannable.setSpan(new ForegroundColorSpan(color), range.first, range.second, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         text.setText(spannable);
     }
