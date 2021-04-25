@@ -4,7 +4,6 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,8 +27,6 @@ import com.example.tosmanager.R;
 import com.example.tosmanager.viewmodel.MyTosViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.ArrayList;
 
 public class MyTosFragment extends Fragment {
     private MyTosViewModel viewModel;
@@ -91,7 +88,7 @@ public class MyTosFragment extends Fragment {
         sortBy.setEnabled(false);
 
         viewModel.getSortID().observe(getViewLifecycleOwner(), id -> {
-            viewModel.sortServices();
+            viewModel.sortListItems();
             updateLayout();
         });
 
@@ -114,13 +111,13 @@ public class MyTosFragment extends Fragment {
         });
         // 검색 처리
         viewModel.getSearchKeyword().observe(getViewLifecycleOwner(), s -> {
-            viewModel.processSearch();
+            viewModel.updateListItems();
 
             if (listViewAdapter != null) {
-                listViewAdapter.updateDataSet(viewModel.getSearchResult());
+                listViewAdapter.updateDataSet(viewModel.getListItems());
             }
             if (gridViewAdapter != null) {
-                gridViewAdapter.updateDataSet(viewModel.getSearchResult());
+                gridViewAdapter.updateDataSet(viewModel.getListItems());
             }
 
             updateLayout();
@@ -131,12 +128,16 @@ public class MyTosFragment extends Fragment {
         }, e -> {
             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
         }, () -> {
-            listViewAdapter = new TosListAdapter(R.layout.fragment_tos_list_item, viewModel.getSearchResult());
-            gridViewAdapter = new TosListAdapter(R.layout.fragment_tos_grid_item, viewModel.getSearchResult());
+            viewModel.updateListItems();
 
+            listViewAdapter = new TosListAdapter(R.layout.fragment_tos_list_item, viewModel.getListItems());
+            gridViewAdapter = new TosListAdapter(R.layout.fragment_tos_grid_item, viewModel.getListItems());
             updateLayout();
+
             toggleLayout.setEnabled(true);
             sortBy.setEnabled(true);
+
+            viewModel.getSortID().setValue(R.id.sortByRecency);
         });
 
         return view;

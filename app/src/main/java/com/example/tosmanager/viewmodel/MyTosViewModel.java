@@ -1,18 +1,12 @@
 package com.example.tosmanager.viewmodel;
 
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.tosmanager.R;
-import com.example.tosmanager.model.DataHolder;
-import com.example.tosmanager.model.TermsSummary;
-import com.example.tosmanager.ui.CalendarFragment;
-import com.example.tosmanager.ui.ConfigurationFragment;
-import com.example.tosmanager.ui.MyTosFragment;
+import com.example.tosmanager.model.SearchResultItem;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -22,16 +16,15 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MyTosViewModel extends ViewModel {
     private final ArrayList<CharSequence> serviceNames = new ArrayList<>();
-    private ArrayList<CharSequence> searchResult = serviceNames;
-    private final MutableLiveData<Integer> sortID = new MutableLiveData<>(R.id.sortByRecency);
+
+    private final MutableLiveData<Integer> sortID = new MutableLiveData<>();
+
     private final MutableLiveData<String> searchKeyword = new MutableLiveData<>("");
     private final MutableLiveData<Boolean> isOnSearch = new MutableLiveData<>(false);
+    private ArrayList<SearchResultItem> listItems;
 
     public ArrayList<CharSequence> getServiceNames() {
         return serviceNames;
-    }
-    public ArrayList<CharSequence> getSearchResult() {
-        return searchResult;
     }
     public MutableLiveData<Integer> getSortID() {
         return sortID;
@@ -41,6 +34,9 @@ public class MyTosViewModel extends ViewModel {
     }
     public MutableLiveData<Boolean> getIsOnSearch() {
         return isOnSearch;
+    }
+    public ArrayList<SearchResultItem> getListItems() {
+        return listItems;
     }
 
     public Observable<CharSequence> fetchServiceNames() {
@@ -53,24 +49,24 @@ public class MyTosViewModel extends ViewModel {
                 .map(s -> s);
     }
 
-    public void sortServices() {
-        Comparator<CharSequence> comparator;
+    public void sortListItems() {
+        Comparator<SearchResultItem> comparator;
         switch (sortID.getValue()) {
             case R.id.sortByName:
-                comparator = (a, b) -> a.toString().compareToIgnoreCase(b.toString());
+                comparator = this::compareSearchResultItemByName;
                 break;
             case R.id.sortByNameInReverse:
-                comparator = (a, b) -> -a.toString().compareToIgnoreCase(b.toString());
+                comparator = (a, b) -> -compareSearchResultItemByName(a, b);
                 break;
             default:
                 // TODO recency 구현
                 comparator = (a, b) -> -1;
                 break;
         }
-        Collections.sort(serviceNames, comparator);
+        Collections.sort(listItems, comparator);
     }
 
-    public void processSearch() {
+    public void updateListItems() {
         String[] splitKeywords = searchKeyword.getValue().split(" ");
 
         // Filter empty strings
@@ -82,22 +78,39 @@ public class MyTosViewModel extends ViewModel {
         }
 
         if (keywords.isEmpty()) {
-            searchResult = serviceNames;
+            serviceNamesToSearchResult();
             return;
         }
 
-        searchResult = new ArrayList<>();
+        listItems = new ArrayList<>();
         for (CharSequence s : serviceNames) {
             boolean containsAll = true;
+            SearchResultItem.Builder builder = new SearchResultItem.Builder();
+
             for (String k : keywords) {
-                if (!s.toString().toLowerCase().contains(k.toLowerCase())) {
+                int index = s.toString().toLowerCase().indexOf(k.toLowerCase());
+                if (index == -1) {
                     containsAll = false;
                     break;
                 }
+
+                builder.addHighlightRange(index, index + k.length());
             }
+
             if (containsAll) {
-                searchResult.add(s);
+                listItems.add(builder.serviceName(s).create());
             }
         }
+    }
+
+    private void serviceNamesToSearchResult() {
+        listItems = new ArrayList<>();
+        for (CharSequence s : serviceNames) {
+            listItems.add(new SearchResultItem.Builder().serviceName(s).create());
+        }
+    }
+
+    private int compareSearchResultItemByName(SearchResultItem a, SearchResultItem b) {
+        return a.getServiceName().toString().compareToIgnoreCase(b.getServiceName().toString());
     }
 }
