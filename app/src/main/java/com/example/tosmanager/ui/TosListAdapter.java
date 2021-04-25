@@ -20,6 +20,10 @@ public class TosListAdapter extends RecyclerView.Adapter<TosViewHolder> {
         localDataSet = dataSet;
     }
 
+    public void updateDataSet(ArrayList<CharSequence> dataSet) {
+        localDataSet = dataSet;
+    }
+
     @Override
     public TosViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext())

@@ -22,12 +22,16 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MyTosViewModel extends ViewModel {
     private ArrayList<CharSequence> serviceNames = new ArrayList<>();
+    private ArrayList<CharSequence> searchResult = serviceNames;
     private MutableLiveData<Integer> sortID = new MutableLiveData<>(R.id.sortByRecency);
     private MutableLiveData<String> searchKeyword = new MutableLiveData<>("");
     private MutableLiveData<Boolean> isOnSearch = new MutableLiveData<>(false);
 
     public ArrayList<CharSequence> getServiceNames() {
         return serviceNames;
+    }
+    public ArrayList<CharSequence> getSearchResult() {
+        return searchResult;
     }
     public MutableLiveData<Integer> getSortID() {
         return sortID;
@@ -64,5 +68,36 @@ public class MyTosViewModel extends ViewModel {
                 break;
         }
         Collections.sort(serviceNames, comparator);
+    }
+
+    public void processSearch() {
+        String[] splitKeywords = searchKeyword.getValue().split(" ");
+
+        // Filter empty strings
+        ArrayList<String> keywords = new ArrayList<>();
+        for (String k : splitKeywords) {
+            if (!k.isEmpty()) {
+                keywords.add(k);
+            }
+        }
+
+        if (keywords.isEmpty()) {
+            searchResult = serviceNames;
+            return;
+        }
+
+        searchResult = new ArrayList<>();
+        for (CharSequence s : serviceNames) {
+            boolean containsAll = true;
+            for (String k : keywords) {
+                if (!s.toString().toLowerCase().contains(k.toLowerCase())) {
+                    containsAll = false;
+                    break;
+                }
+            }
+            if (containsAll) {
+                searchResult.add(s);
+            }
+        }
     }
 }

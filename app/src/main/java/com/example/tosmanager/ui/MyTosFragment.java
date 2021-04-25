@@ -91,6 +91,7 @@ public class MyTosFragment extends Fragment {
         sortBy.setEnabled(false);
 
         viewModel.getSortID().observe(getViewLifecycleOwner(), id -> {
+            viewModel.sortServices();
             updateLayout();
         });
 
@@ -111,14 +112,27 @@ public class MyTosFragment extends Fragment {
                 bottomNavigationView.setVisibility(View.VISIBLE);
             }
         });
+        // 검색 처리
+        viewModel.getSearchKeyword().observe(getViewLifecycleOwner(), s -> {
+            viewModel.processSearch();
+
+            if (listViewAdapter != null) {
+                listViewAdapter.updateDataSet(viewModel.getSearchResult());
+            }
+            if (gridViewAdapter != null) {
+                gridViewAdapter.updateDataSet(viewModel.getSearchResult());
+            }
+
+            updateLayout();
+        });
 
         // 데이터 접근
         viewModel.fetchServiceNames().subscribe(s -> {
         }, e -> {
             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
         }, () -> {
-            listViewAdapter = new TosListAdapter(R.layout.fragment_tos_list_item, viewModel.getServiceNames());
-            gridViewAdapter = new TosListAdapter(R.layout.fragment_tos_grid_item, viewModel.getServiceNames());
+            listViewAdapter = new TosListAdapter(R.layout.fragment_tos_list_item, viewModel.getSearchResult());
+            gridViewAdapter = new TosListAdapter(R.layout.fragment_tos_grid_item, viewModel.getSearchResult());
 
             updateLayout();
             toggleLayout.setEnabled(true);
@@ -162,8 +176,6 @@ public class MyTosFragment extends Fragment {
     }
 
     private void updateLayout() {
-        viewModel.sortServices();
-
         RecyclerView.LayoutManager layout = linearLayoutManager;
         RecyclerView.Adapter<TosViewHolder> adapter = listViewAdapter;
         @DrawableRes int iconID = R.drawable.ic_baseline_view_module_24;
