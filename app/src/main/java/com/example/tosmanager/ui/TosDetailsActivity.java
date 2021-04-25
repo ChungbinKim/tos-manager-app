@@ -18,6 +18,9 @@ import com.example.tosmanager.model.ExtraName;
 import com.example.tosmanager.util.CreateDialog;
 import com.example.tosmanager.viewmodel.TosDetailsViewModel;
 
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Date;
 
 public class TosDetailsActivity extends AppCompatActivity {
@@ -27,6 +30,9 @@ public class TosDetailsActivity extends AppCompatActivity {
     // UI
     private TextView nameText;
     private ImageView editName;
+
+    private final SimpleDateFormat DATETIME_FORMAT = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
+    private final String DATETIME_PATTERN = "^\\d+-\\d+-\\d+ \\d+:\\d+:\\d+$";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +44,7 @@ public class TosDetailsActivity extends AppCompatActivity {
 
         String name = getIntent().getStringExtra(ExtraName.TERMS_NAME);
         if (name == null) {
-            name = new Date().toString();
+            name = DATETIME_FORMAT.format(new Date());
         }
         viewModel.getServiceName().setValue(name);
 
@@ -53,7 +59,11 @@ public class TosDetailsActivity extends AppCompatActivity {
         editName.setOnClickListener(v -> {
             final View view = getLayoutInflater().inflate(R.layout.dialog_edit_text, null);
             final EditText editText = view.findViewById(R.id.dialogEditText);
-            editText.setText(nameText.getText());
+
+            CharSequence prevName = viewModel.getServiceName().getValue();
+            if (!prevName.toString().matches(DATETIME_PATTERN)) {
+                editText.setText(prevName);
+            }
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this)
                     .setMessage(R.string.text_edit_name)
