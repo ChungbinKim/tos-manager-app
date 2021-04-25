@@ -2,6 +2,7 @@ package com.example.tosmanager.ui;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -99,6 +100,10 @@ public class MyTosFragment extends Fragment {
 
         // 약관 추가 버튼
         addTos = view.findViewById(R.id.myTosAdd);
+        addTos.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), AddTosActivity.class);
+            startActivity(intent);
+        });
 
         BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.bottomNavigationView);
 
