@@ -40,10 +40,13 @@ public class TosDetailsActivity extends AppCompatActivity {
         if (name == null) {
             name = new Date().toString();
         }
+        viewModel.getServiceName().setValue(name);
 
         // 서비스 이름
         nameText = findViewById(R.id.tosDetailsName);
-        nameText.setText(name);
+        viewModel.getServiceName().observe(this, serviceName -> {
+            nameText.setText(serviceName);
+        });
 
         // 이름 변경 버튼
         editName = findViewById(R.id.tosDetailsEditName);
@@ -56,7 +59,7 @@ public class TosDetailsActivity extends AppCompatActivity {
                     .setMessage(R.string.text_edit_name)
                     .setView(view)
                     .setPositiveButton(R.string.yes, (dialog, which) -> {
-                        nameText.setText(editText.getText());
+                        viewModel.getServiceName().setValue(editText.getText().toString());
                     })
                     .setNegativeButton(R.string.no, (dialog, which) -> dialog.cancel());
 
