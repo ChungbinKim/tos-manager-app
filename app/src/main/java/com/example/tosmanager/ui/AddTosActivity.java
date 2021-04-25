@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.tosmanager.R;
+import com.example.tosmanager.model.ExtraName;
 import com.example.tosmanager.util.CreateDialog;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -26,14 +27,10 @@ public class AddTosActivity extends AppCompatActivity {
         textInputByShare.setText(Html.fromHtml(getString(R.string.text_input_tos_by_share)));
 
         // 공유된 text 처리
-        Intent intent = getIntent();
-        String action = intent.getAction();
-        if (Intent.ACTION_SEND.equals(action) && intent.getType().equals("text/plain")) {
-            String text = intent.getStringExtra(Intent.EXTRA_TEXT);
-            if (text != null) {
-                TextInputEditText input = findViewById(R.id.addTosInput);
-                input.setText(text);
-            }
+        String inputText = getIntent().getStringExtra(ExtraName.INPUT_TEXT);
+        if (inputText != null) {
+            TextInputEditText input = findViewById(R.id.addTosInput);
+            input.setText(inputText);
         }
 
         Button summarizeButton = findViewById(R.id.addTosButton);

@@ -25,6 +25,7 @@ public class LoginViewModel extends ViewModel {
     private final MutableLiveData<String> password = new MutableLiveData<>("");
     // state
     private final MutableLiveData<Boolean> isLogging = new MutableLiveData<>(false);
+    private final MutableLiveData<String> inputText = new MutableLiveData<>();
 
     public MutableLiveData<String> getID() {
         return id;
@@ -34,6 +35,9 @@ public class LoginViewModel extends ViewModel {
     }
     public MutableLiveData<Boolean> getIsLogging() {
         return isLogging;
+    }
+    public MutableLiveData<String> getInputText() {
+        return inputText;
     }
 
     public Observable<String> logIn(Context context) {
