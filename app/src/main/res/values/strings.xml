@@ -44,6 +44,9 @@
     <string name="sort_by_name_in_reverse">이름 순(Z-A)</string>
     <string name="text_my_tos_search_hint">서비스 검색</string>
 
+    <!-- ToS Details Activity -->
+    <string name="text_edit_name">서비스 이름:</string>
+
     <!-- Configuration Fragment -->
     <string name="header_ui_ux">UI/UX</string>
     <string name="input_tutorial_title">약관 입력</string>

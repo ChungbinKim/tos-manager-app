@@ -1,12 +1,16 @@
 package com.example.tosmanager.ui;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.tosmanager.R;
@@ -22,6 +26,7 @@ public class TosDetailsActivity extends AppCompatActivity {
 
     // UI
     private TextView nameText;
+    private ImageView editName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +41,27 @@ public class TosDetailsActivity extends AppCompatActivity {
             name = new Date().toString();
         }
 
+        // 서비스 이름
         nameText = findViewById(R.id.tosDetailsName);
         nameText.setText(name);
+
+        // 이름 변경 버튼
+        editName = findViewById(R.id.tosDetailsEditName);
+        editName.setOnClickListener(v -> {
+            final View view = getLayoutInflater().inflate(R.layout.dialog_edit_text, null);
+            final EditText editText = view.findViewById(R.id.dialogEditText);
+            editText.setText(nameText.getText());
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                    .setMessage(R.string.text_edit_name)
+                    .setView(view)
+                    .setPositiveButton(R.string.yes, (dialog, which) -> {
+                        nameText.setText(editText.getText());
+                    })
+                    .setNegativeButton(R.string.no, (dialog, which) -> dialog.cancel());
+
+            builder.create().show();
+        });
 
         viewModel.fetchTermsSummary(name).subscribe(summary -> {});
     }
