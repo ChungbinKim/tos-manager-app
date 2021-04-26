@@ -11,9 +11,6 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.BulletSpan;
-import android.text.style.ForegroundColorSpan;
-import android.util.Pair;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,20 +19,21 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.evrencoskun.tableview.TableView;
 import com.example.tosmanager.R;
 import com.example.tosmanager.model.ExtraName;
 import com.example.tosmanager.model.ListContent;
 import com.example.tosmanager.model.ListContents;
-import com.example.tosmanager.model.TableRow;
+import com.example.tosmanager.model.TableContent;
 import com.example.tosmanager.model.TermsSummary;
 import com.example.tosmanager.util.CreateDialog;
 import com.example.tosmanager.util.Metrics;
 import com.example.tosmanager.viewmodel.TosDetailsViewModel;
 
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class TosDetailsActivity extends AppCompatActivity {
     private TosDetailsViewModel viewModel;
@@ -132,6 +130,28 @@ public class TosDetailsActivity extends AppCompatActivity {
                 layout.addView(view);
             }
         }
+
+        TableView tableView = new TableView(this);
+        SummaryTableAdapter adapter = new SummaryTableAdapter();
+        tableView.setAdapter(adapter);
+        setAllItems(adapter, summary.getTableContent(), viewModel.getServiceName().getValue());
+        layout.addView(tableView);
+    }
+
+    private void setAllItems(SummaryTableAdapter adapter, TableContent table, CharSequence serviceName) {
+        List<CharSequence> colHeaders = new ArrayList<>();
+        colHeaders.add(serviceName);
+
+        List<CharSequence> rowHeaders = new ArrayList<>(table.getRowKeys());
+
+        List<List<CharSequence>> cells = new ArrayList<>();
+        for (CharSequence rowKey : rowHeaders) {
+            List<CharSequence> cell = new ArrayList<>();
+            cell.add(table.getRow(rowKey).toCharSequence());
+            cells.add(cell);
+        }
+
+        adapter.setAllItems(colHeaders, rowHeaders, cells);
     }
 
     private Spannable toList(Iterable<CharSequence> items) {
