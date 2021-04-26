@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tosmanager.BuildConfig;
 import com.example.tosmanager.R;
+import com.example.tosmanager.model.ExtraName;
 import com.example.tosmanager.util.ForwardText;
 import com.example.tosmanager.viewmodel.InitialNoticeViewModel;
 import com.google.android.material.textfield.TextInputEditText;
@@ -34,8 +35,16 @@ public class InitialNoticeActivity extends AppCompatActivity {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         getSupportActionBar().hide();
 
+        // 공유를 통한 접속
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        if (Intent.ACTION_SEND.equals(action) && intent.getType().equals("text/plain")) {
+            String text = intent.getStringExtra(Intent.EXTRA_TEXT);
+            viewModel.getInputText().setValue(text);
+        }
+
         if (sharedPreferences.getBoolean("is-agreed", false)) {
-            proceed();
+            proceed(viewModel.getInputText().getValue());
             return;
         }
 
@@ -56,7 +65,7 @@ public class InitialNoticeActivity extends AppCompatActivity {
         // 동의 버튼
         initialNoticeAgreeButton = findViewById(R.id.initialNoticeAgreeButton);
         initialNoticeAgreeButton.setOnClickListener(v -> {
-            proceed();
+            proceed(viewModel.getInputText().getValue());
         });
 
         viewModel.getConfirmText().observe(this, s -> {
@@ -64,11 +73,14 @@ public class InitialNoticeActivity extends AppCompatActivity {
         });
     }
 
-    private void proceed() {
+    private void proceed(String inputText) {
         sharedPreferences.edit().putBoolean("is-agreed", true).apply();
 
         Intent intent;
         intent = new Intent(this, LoginActivity.class);
+        if (inputText != null) {
+            intent.putExtra(ExtraName.INPUT_TEXT, inputText);
+        }
         startActivity(intent);
     }
 }

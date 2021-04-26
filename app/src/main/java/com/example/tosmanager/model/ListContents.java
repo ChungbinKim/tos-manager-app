@@ -5,33 +5,34 @@ import java.util.Collection;
 import java.util.HashMap;
 
 public class ListContents {
-    private HashMap<CharSequence, ListContent> contents = new HashMap<>();
+    private final HashMap<CharSequence, ListContent> contents = new HashMap<>();
+    private ListContent content;
 
-    public void addItem(ListContent item) {
-        contents.put(item.getKey(), item);
-    }
-}
-
-class ListContent {
-    private CharSequence key;
-    private ArrayList<CharSequence> contents = new ArrayList<>();
-
-    ListContent(CharSequence key) {
-        this.key = key;
+    public ListContents addContent(CharSequence key) {
+        content = new ListContent(key);
+        contents.put(key, content);
+        return this;
     }
 
-    public CharSequence getKey() {
-        return key;
-    }
-    public Iterable<CharSequence> getContents() {
-        return contents;
+    public ListContent getContent(CharSequence key) {
+        return contents.get(key);
     }
 
-    public void addContent(CharSequence content) {
-        contents.add(content);
+    public Collection<CharSequence> getKeys() {
+        return contents.keySet();
     }
 
-    public void addContents(Collection<CharSequence> contents) {
-        this.contents.addAll(contents);
+    public Collection<ListContent> getContents() {
+        return contents.values();
+    }
+
+    public ListContents addItem(CharSequence item) {
+        content.addItem(item);
+        return this;
+    }
+
+    public ListContents addItems(Collection<CharSequence> items) {
+        content.addItems(items);
+        return this;
     }
 }

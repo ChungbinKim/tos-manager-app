@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.tosmanager">
+
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,12 +12,28 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ToSManager">
         <activity
+            android:name=".ui.TosDetailsActivity"
+            android:parentActivityName=".ui.MainActivity" />
+        <activity
+            android:name=".ui.AddTosActivity"
+            android:noHistory="true"
+            android:parentActivityName=".ui.MainActivity">
+        </activity>
+        <activity
             android:name=".ui.InitialNoticeActivity"
             android:noHistory="true"
             android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
         <activity
@@ -32,7 +50,7 @@
         <activity android:name=".ui.LoginActivity" />
         <activity
             android:name=".ui.PrivacyPolicyActivity"
-            android:parentActivityName=".ui.CreateAccountActivity">
-        </activity>
+            android:parentActivityName=".ui.CreateAccountActivity" />
     </application>
+
 </manifest>

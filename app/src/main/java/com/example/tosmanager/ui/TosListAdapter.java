@@ -25,10 +25,14 @@ public class TosListAdapter extends RecyclerView.Adapter<TosViewHolder> {
     @ColorInt private int color;
     private ArrayList<SearchResultItem> dataSet;
 
-    public TosListAdapter(int layoutID, ArrayList<SearchResultItem> dataSet, @ColorInt int color) {
+    private View.OnClickListener onClick;
+
+    public TosListAdapter(int layoutID, ArrayList<SearchResultItem> dataSet, @ColorInt int color, View.OnClickListener onClick) {
         this.layoutID = layoutID;
         updateDataSet(dataSet);
         this.color = color;
+
+        this.onClick = onClick;
     }
 
     public void updateDataSet(ArrayList<SearchResultItem> dataSet) {
@@ -40,6 +44,7 @@ public class TosListAdapter extends RecyclerView.Adapter<TosViewHolder> {
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(layoutID, viewGroup, false);
 
+        view.setOnClickListener(onClick);
         return new TosViewHolder(view);
     }
 

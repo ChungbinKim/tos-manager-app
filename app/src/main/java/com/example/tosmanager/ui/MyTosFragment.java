@@ -2,6 +2,7 @@ package com.example.tosmanager.ui;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -25,6 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tosmanager.R;
+import com.example.tosmanager.model.ExtraName;
 import com.example.tosmanager.util.ColorUtil;
 import com.example.tosmanager.viewmodel.MyTosViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -107,6 +109,10 @@ public class MyTosFragment extends Fragment {
 
         // 약관 추가 버튼
         addTos = view.findViewById(R.id.myTosAdd);
+        addTos.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), AddTosActivity.class);
+            startActivity(intent);
+        });
 
         BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.bottomNavigationView);
 
@@ -140,9 +146,18 @@ public class MyTosFragment extends Fragment {
         }, () -> {
             viewModel.updateListItems();
 
+            View.OnClickListener onClick = v -> {
+                int position = myTosList.getChildAdapterPosition(v);
+                CharSequence serviceName = viewModel.getListItems().get(position).getServiceName();
+
+                Intent intent = new Intent(getActivity(), TosDetailsActivity.class);
+                intent.putExtra(ExtraName.TERMS_NAME, serviceName);
+                startActivity(intent);
+            };
+
             int color = ColorUtil.getThemeColor(R.attr.colorSecondary, context);
-            listViewAdapter = new TosListAdapter(R.layout.fragment_tos_list_item, viewModel.getListItems(), color);
-            gridViewAdapter = new TosListAdapter(R.layout.fragment_tos_grid_item, viewModel.getListItems(), color);
+            listViewAdapter = new TosListAdapter(R.layout.fragment_tos_list_item, viewModel.getListItems(), color, onClick);
+            gridViewAdapter = new TosListAdapter(R.layout.fragment_tos_grid_item, viewModel.getListItems(), color, onClick);
 
             updateLayout();
 

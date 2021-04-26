@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.tosmanager.R;
+import com.example.tosmanager.model.ExtraName;
 import com.example.tosmanager.util.ForwardText;
 import com.example.tosmanager.viewmodel.LoginViewModel;
 import com.google.android.material.textfield.TextInputEditText;
@@ -43,6 +44,11 @@ public class LoginActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        String inputText = getIntent().getStringExtra(ExtraName.INPUT_TEXT);
+        if (inputText != null) {
+            viewModel.getInputText().setValue(inputText);
+        }
 
         // 이메일 입력창
         loginEmail = findViewById(R.id.loginEmail);
@@ -82,6 +88,11 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.putExtra("Email", queue.poll());
             intent.putExtra("Password",queue.poll());
+
+            String inputText = viewModel.getInputText().getValue();
+            if (inputText != null) {
+                intent.putExtra(ExtraName.INPUT_TEXT, inputText);
+            }
 
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             LoginActivity.this.startActivity(intent);

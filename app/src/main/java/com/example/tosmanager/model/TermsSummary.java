@@ -17,6 +17,10 @@ public class TermsSummary {
         return serviceName;
     }
 
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
+    }
+
     public ListContents getListContents() {
         return listContents;
     }
