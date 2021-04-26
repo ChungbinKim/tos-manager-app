@@ -31,6 +31,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MyTosFragment extends Fragment {
+    private Context context;
+
     private MyTosViewModel viewModel;
     private static final String TAG = MyTosFragment.class.getName();
     private SharedPreferences preferences;
@@ -47,6 +49,12 @@ public class MyTosFragment extends Fragment {
 
     public MyTosFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
     }
 
     @Override
@@ -132,9 +140,10 @@ public class MyTosFragment extends Fragment {
         }, () -> {
             viewModel.updateListItems();
 
-            int color = ColorUtil.getThemeColor(R.attr.colorSecondary, getContext());
+            int color = ColorUtil.getThemeColor(R.attr.colorSecondary, context);
             listViewAdapter = new TosListAdapter(R.layout.fragment_tos_list_item, viewModel.getListItems(), color);
             gridViewAdapter = new TosListAdapter(R.layout.fragment_tos_grid_item, viewModel.getListItems(), color);
+
             updateLayout();
 
             toggleLayout.setEnabled(true);
