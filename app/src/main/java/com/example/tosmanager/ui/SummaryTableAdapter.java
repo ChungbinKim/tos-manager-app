@@ -40,7 +40,7 @@ public class SummaryTableAdapter extends AbstractTableAdapter<CharSequence, Char
         CellViewHolder viewHolder = (CellViewHolder) holder;
         viewHolder.textView.setText(cell);
 
-        viewHolder.container.getLayoutParams().width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        viewHolder.container.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
         viewHolder.textView.requestLayout();
     }
 
@@ -70,7 +70,7 @@ public class SummaryTableAdapter extends AbstractTableAdapter<CharSequence, Char
         ColumnHeaderViewHolder columnHeaderViewHolder = (ColumnHeaderViewHolder) holder;
         columnHeaderViewHolder.textView.setText(columnHeader);
 
-        columnHeaderViewHolder.container.getLayoutParams().width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        columnHeaderViewHolder.container.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
         columnHeaderViewHolder.textView.requestLayout();
     }
 

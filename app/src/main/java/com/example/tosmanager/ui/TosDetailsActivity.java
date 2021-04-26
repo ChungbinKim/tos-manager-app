@@ -43,6 +43,7 @@ public class TosDetailsActivity extends AppCompatActivity {
     private TextView nameText;
     private ImageView editName;
     private LinearLayout layout;
+    private TableView table;
 
     private final SummaryTableAdapter adapter = new SummaryTableAdapter();
 
@@ -67,6 +68,12 @@ public class TosDetailsActivity extends AppCompatActivity {
         nameText = findViewById(R.id.tosDetailsName);
         viewModel.getServiceName().observe(this, serviceName -> {
             nameText.setText(serviceName);
+
+            int col = 0;
+            if (adapter.getColumnHeaderItem(col) != null) {
+                adapter.changeColumnHeader(col, serviceName);
+                table.remeasureColumnWidth(col);
+            }
         });
 
         // 이름 변경 버튼
@@ -138,7 +145,7 @@ public class TosDetailsActivity extends AppCompatActivity {
         TextView tableTitle = tableView.findViewById(R.id.summaryTableTitle);
         tableTitle.setText(summary.getTableContent().getKey());
 
-        TableView table = tableView.findViewById(R.id.summaryTable);
+        table = tableView.findViewById(R.id.summaryTable);
         fillUpTable(table, summary.getTableContent(), viewModel.getServiceName().getValue());
         layout.addView(tableView);
     }
