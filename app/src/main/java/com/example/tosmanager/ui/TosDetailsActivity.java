@@ -44,6 +44,8 @@ public class TosDetailsActivity extends AppCompatActivity {
     private ImageView editName;
     private LinearLayout layout;
 
+    private final SummaryTableAdapter adapter = new SummaryTableAdapter();
+
     private final SimpleDateFormat DATETIME_FORMAT = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
     private final String DATETIME_PATTERN = "^\\d+-\\d+-\\d+ \\d+:\\d+:\\d+$";
 
@@ -117,37 +119,42 @@ public class TosDetailsActivity extends AppCompatActivity {
         for (CharSequence k : keys) {
             ListContent content = lists.getContent(k);
             if (content != null) {
-                View view = getLayoutInflater().inflate(R.layout.summary_list, null);
+                View listView = getLayoutInflater().inflate(R.layout.summary_list, null);
 
                 // 리스트 제목
-                TextView listTitle = view.findViewById(R.id.summaryListTitle);
+                TextView listTitle = listView.findViewById(R.id.summaryListTitle);
                 listTitle.setText(content.getKey());
 
                 // 리스트 내용
-                TextView listContent = view.findViewById(R.id.summaryListContent);
+                TextView listContent = listView.findViewById(R.id.summaryListContent);
                 listContent.append(toList(content.getItems()));
 
-                layout.addView(view);
+                layout.addView(listView);
             }
         }
 
-        TableView tableView = new TableView(this);
-        SummaryTableAdapter adapter = new SummaryTableAdapter();
-        tableView.setAdapter(adapter);
-        setAllItems(adapter, summary.getTableContent(), viewModel.getServiceName().getValue());
+        View tableView = getLayoutInflater().inflate(R.layout.summary_table, null);
+
+        TextView tableTitle = tableView.findViewById(R.id.summaryTableTitle);
+        tableTitle.setText(summary.getTableContent().getKey());
+
+        TableView table = tableView.findViewById(R.id.summaryTable);
+        fillUpTable(table, summary.getTableContent(), viewModel.getServiceName().getValue());
         layout.addView(tableView);
     }
 
-    private void setAllItems(SummaryTableAdapter adapter, TableContent table, CharSequence serviceName) {
+    private void fillUpTable(TableView tableView, TableContent tableContent, CharSequence serviceName) {
+        tableView.setAdapter(adapter);
+
         List<CharSequence> colHeaders = new ArrayList<>();
         colHeaders.add(serviceName);
 
-        List<CharSequence> rowHeaders = new ArrayList<>(table.getRowKeys());
+        List<CharSequence> rowHeaders = new ArrayList<>(tableContent.getRowKeys());
 
         List<List<CharSequence>> cells = new ArrayList<>();
         for (CharSequence rowKey : rowHeaders) {
             List<CharSequence> cell = new ArrayList<>();
-            cell.add(table.getRow(rowKey).toCharSequence());
+            cell.add(tableContent.getRow(rowKey).toCharSequence());
             cells.add(cell);
         }
 

@@ -2,7 +2,6 @@
 <RelativeLayout android:id="@+id/row_root"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/grey"
     android:layout_width="@dimen/default_row_header_width"
     android:layout_height="48dp">
 
@@ -11,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
+        android:background="@color/grey_light"
         android:orientation="vertical">
 
         <TextView
@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:maxLines="1"
+            android:maxLines="2"
             android:textColor="@color/black"
             android:textStyle="bold"
             tools:text="휴면 기간" />
