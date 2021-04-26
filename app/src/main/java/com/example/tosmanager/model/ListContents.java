@@ -18,6 +18,14 @@ public class ListContents {
         return contents.get(key);
     }
 
+    public Collection<CharSequence> getKeys() {
+        return contents.keySet();
+    }
+
+    public Collection<ListContent> getContents() {
+        return contents.values();
+    }
+
     public ListContents addItem(CharSequence item) {
         content.addItem(item);
         return this;

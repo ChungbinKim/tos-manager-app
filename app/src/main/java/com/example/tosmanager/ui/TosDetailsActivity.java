@@ -6,16 +6,30 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.BulletSpan;
+import android.text.style.ForegroundColorSpan;
+import android.util.Pair;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.tosmanager.R;
 import com.example.tosmanager.model.ExtraName;
+import com.example.tosmanager.model.ListContent;
+import com.example.tosmanager.model.ListContents;
+import com.example.tosmanager.model.TableRow;
+import com.example.tosmanager.model.TermsSummary;
 import com.example.tosmanager.util.CreateDialog;
+import com.example.tosmanager.util.Metrics;
 import com.example.tosmanager.viewmodel.TosDetailsViewModel;
 
 import java.text.SimpleDateFormat;
@@ -30,6 +44,7 @@ public class TosDetailsActivity extends AppCompatActivity {
     // UI
     private TextView nameText;
     private ImageView editName;
+    private LinearLayout layout;
 
     private final SimpleDateFormat DATETIME_FORMAT = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
     private final String DATETIME_PATTERN = "^\\d+-\\d+-\\d+ \\d+:\\d+:\\d+$";
@@ -76,7 +91,8 @@ public class TosDetailsActivity extends AppCompatActivity {
             builder.create().show();
         });
 
-        viewModel.fetchTermsSummary(name).subscribe(summary -> {});
+        layout = findViewById(R.id.tosDetailsLayout);
+        viewModel.fetchTermsSummary(name).subscribe(this::renderSummary);
     }
 
     @Override
@@ -94,5 +110,39 @@ public class TosDetailsActivity extends AppCompatActivity {
             }).show();
         }
         return deleteConfirmed;
+    }
+
+    private void renderSummary(TermsSummary summary) {
+        final ListContents lists = summary.getListContents();
+        final CharSequence[] keys = new CharSequence[]{"사업자 권리", "사업자 의무"};
+
+        for (CharSequence k : keys) {
+            ListContent content = lists.getContent(k);
+            if (content != null) {
+                View view = getLayoutInflater().inflate(R.layout.summary_list, null);
+
+                // 리스트 제목
+                TextView listTitle = view.findViewById(R.id.summaryListTitle);
+                listTitle.setText(content.getKey());
+
+                // 리스트 내용
+                TextView listContent = view.findViewById(R.id.summaryListContent);
+                listContent.append(toList(content.getItems()));
+
+                layout.addView(view);
+            }
+        }
+    }
+
+    private Spannable toList(Iterable<CharSequence> items) {
+        SpannableStringBuilder builder = new SpannableStringBuilder();
+
+        for (CharSequence i : items) {
+            Spannable spannable = new SpannableString(i);
+            spannable.setSpan(new BulletSpan(Metrics.dp(8, this)), 0, i.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            builder.append(spannable).append('\n');
+        }
+
+        return builder;
     }
 }

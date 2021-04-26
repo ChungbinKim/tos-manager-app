@@ -1,5 +1,6 @@
 package com.example.tosmanager.model;
 
+import java.util.Collection;
 import java.util.HashMap;
 
 public class TableContent {
@@ -26,5 +27,13 @@ public class TableContent {
 
     public TableRow getRow(CharSequence key) {
         return rows.get(key);
+    }
+
+    public Collection<TableRow> getRows() {
+        return rows.values();
+    }
+
+    public Collection<CharSequence> getRowKeys() {
+        return rows.keySet();
     }
 }
