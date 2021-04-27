@@ -46,6 +46,7 @@
 
     <!-- ToS Details Activity -->
     <string name="text_edit_name">서비스 이름:</string>
+    <string name="text_summary_table_corner">항목</string>
 
     <!-- Configuration Fragment -->
     <string name="header_ui_ux">UI/UX</string>

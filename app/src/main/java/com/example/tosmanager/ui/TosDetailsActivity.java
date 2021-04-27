@@ -91,7 +91,9 @@ public class TosDetailsActivity extends AppCompatActivity {
                     .setMessage(R.string.text_edit_name)
                     .setView(view)
                     .setPositiveButton(R.string.yes, (dialog, which) -> {
-                        viewModel.getServiceName().setValue(editText.getText().toString());
+                        String newName = editText.getText().toString();
+                        viewModel.getServiceName().setValue(newName);
+                        viewModel.renameTermsSummary(newName).subscribe();
                     })
                     .setNegativeButton(R.string.no, (dialog, which) -> dialog.cancel());
 
@@ -114,6 +116,7 @@ public class TosDetailsActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.deleteTos) {
             CreateDialog.createPrompt(this, R.string.delete_tos_dialog_message, (dialog, which) -> {
                 deleteConfirmed = true;
+                viewModel.deleteTermsSummary(viewModel.getServiceName().getValue().toString()).subscribe(this::finish);
             }).show();
         }
         return deleteConfirmed;

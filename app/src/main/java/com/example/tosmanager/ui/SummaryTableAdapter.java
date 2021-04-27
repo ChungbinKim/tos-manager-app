@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import com.evrencoskun.tableview.adapter.AbstractTableAdapter;
 import com.evrencoskun.tableview.adapter.recyclerview.holder.AbstractViewHolder;
 import com.example.tosmanager.R;
+import com.example.tosmanager.util.IconString;
 
 public class SummaryTableAdapter extends AbstractTableAdapter<CharSequence, CharSequence, CharSequence> {
     class CellViewHolder extends AbstractViewHolder {
@@ -35,13 +36,21 @@ public class SummaryTableAdapter extends AbstractTableAdapter<CharSequence, Char
 
     @Override
     public void onBindCellViewHolder(@NonNull AbstractViewHolder holder, @Nullable CharSequence cellItemModel, int columnPosition, int rowPosition) {
-        CharSequence cell = cellItemModel;
-
         CellViewHolder viewHolder = (CellViewHolder) holder;
-        viewHolder.textView.setText(cell);
+        LinearLayout container = viewHolder.container;
+        TextView textView = viewHolder.textView;
 
-        viewHolder.container.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
-        viewHolder.textView.requestLayout();
+        CharSequence cell = cellItemModel;
+        if (cell.equals("false")) {
+            cell = new IconString(container.getContext(), R.drawable.ic_baseline_close_24, container.getResources().getColor(R.color.red));
+        } else if (cell.equals("true")) {
+            cell = new IconString(container.getContext(), R.drawable.ic_baseline_check_24, container.getResources().getColor(R.color.green));
+        }
+
+        textView.setText(cell);
+
+        container.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
+        textView.requestLayout();
     }
 
     class ColumnHeaderViewHolder extends AbstractViewHolder {

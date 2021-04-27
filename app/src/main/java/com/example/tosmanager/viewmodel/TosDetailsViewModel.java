@@ -8,6 +8,7 @@ import com.example.tosmanager.model.TableContent;
 import com.example.tosmanager.model.TermsSummary;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -38,6 +39,20 @@ public class TosDetailsViewModel extends ViewModel {
                 .addRow("장기 휴면시 계정 삭제", false);
 
         return Single.just(dummySummary)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Completable deleteTermsSummary(String id) {
+        // TODO DB에서 삭제 처리
+        return Completable.complete()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Completable renameTermsSummary(String id) {
+        // TODO DB에서 이름변경 처리
+        return Completable.complete()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
