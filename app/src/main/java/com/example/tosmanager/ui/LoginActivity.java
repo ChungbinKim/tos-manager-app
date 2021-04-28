@@ -68,6 +68,7 @@ public class LoginActivity extends AppCompatActivity {
         // 이메일 입력창
         loginEmail = findViewById(R.id.loginEmail);
         loginEmail.addTextChangedListener(new ForwardText(viewModel.getID()));
+        loginEmail.requestFocus();
 
         // 비밀번호 입력창
         loginPassword = findViewById(R.id.loginPassword);
