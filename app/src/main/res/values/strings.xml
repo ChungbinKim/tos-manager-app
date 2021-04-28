@@ -50,7 +50,7 @@
 
     <!-- Configuration Fragment -->
     <string name="header_ui_ux">UI/UX</string>
-    <string name="input_tutorial_title">약관 입력</string>
+    <string name="input_tutorial_title">약관 입력 설명</string>
     <string name="input_tutorial_summary">약관 텍스트 입력 아래에 더 편리한 입력 방법에 대한 설명을 표시합니다.</string>
 
     <string name="header_data">데이터</string>
