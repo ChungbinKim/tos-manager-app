@@ -77,11 +77,10 @@
     <string name="text_summarize_dialog_message">입력한 약관을 요약하시겠습니까?</string>
     <string name="text_input_tos_by_share">
 <![CDATA[
-<p>
-텍스트 선택, 또는 인터넷 브라우저로 약관 페이지에 들어간 뒤, <b>공유</b>기능에서 <font color="red"><b>요약하기</b></font>를 선택하세요
-</p>
+텍스트 선택, 또는 인터넷 브라우저로 약관 페이지에 들어간 뒤, <b>공유</b>기능에서 <font color="red"><b>요약하기</b></font>를 선택하세요.
 ]]>
     </string>
+    <string name="text_do_not_show_again">해당 설명을 다시 보지 않습니다.</string>
 
     <!-- ToS Details Activity -->
     <string name="title_tos_details">요약 결과</string>
