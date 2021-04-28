@@ -20,6 +20,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
+import java.util.concurrent.TimeoutException;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
@@ -36,19 +37,33 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
 
         viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
-        setUpObservers();
 
         getSupportActionBar().hide();
 
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        // 로그인 세션이 남아있을시 생략
+        viewModel.fetchSession().subscribe(session -> {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+        }, e -> {
+            if (e instanceof TimeoutException) {
+                setUpView();
+            }
+        }, this::setUpView);
 
         String inputText = getIntent().getStringExtra(ExtraName.INPUT_TEXT);
         if (inputText != null) {
             viewModel.getInputText().setValue(inputText);
         }
+    }
+
+    private void setUpView() {
+        setContentView(R.layout.activity_login);
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         // 이메일 입력창
         loginEmail = findViewById(R.id.loginEmail);
@@ -64,6 +79,13 @@ public class LoginActivity extends AppCompatActivity {
         createAccount = findViewById(R.id.loginCreateAccount);
         // 계정 복구
         recoverPassword = findViewById(R.id.loginRecoverPassword);
+
+        viewModel.getIsLogging().observe(this, b -> {
+            // 로그인중 버튼 비활성화
+            loginButton.setEnabled(!b);
+            createAccount.setEnabled(!b);
+            recoverPassword.setEnabled(!b);
+        });
     }
 
     // 계정 생성
@@ -74,7 +96,6 @@ public class LoginActivity extends AppCompatActivity {
 
     // 로그인
     public void onLogIn(View v) {
-        sharedPreferences.edit().putBoolean("isAccountless", false).apply();
         Queue<String> queue = new ArrayDeque<>();
 
         viewModel.logIn(this).subscribe(s -> queue.add(s), e -> {
@@ -104,14 +125,5 @@ public class LoginActivity extends AppCompatActivity {
     public void onRecoverPassword(View v) {
         Intent intent = new Intent(this, RecoverPasswordActivity.class);
         startActivity(intent);
-    }
-
-    private void setUpObservers() {
-        viewModel.getIsLogging().observe(this, b -> {
-            // 로그인중 버튼 비활성화
-            loginButton.setEnabled(!b);
-            createAccount.setEnabled(!b);
-            recoverPassword.setEnabled(!b);
-        });
     }
 }

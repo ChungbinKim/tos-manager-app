@@ -1,6 +1,7 @@
 package com.example.tosmanager.viewmodel;
 
 import android.content.Context;
+import android.os.SystemClock;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -14,7 +15,10 @@ import com.example.tosmanager.ui.LoginRequest;
 
 import org.json.JSONObject;
 
+import java.util.concurrent.TimeUnit;
+
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Maybe;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -81,7 +85,14 @@ public class LoginViewModel extends ViewModel {
                 .doFinally(() -> isLogging.postValue(false));
     }
 
-    public void skipLogIn() {
-        DataHolder.getInstance().setLoginSession(null);
+    public Maybe<LoginSession> fetchSession() {
+        // TODO 저장된 token 불러오기
+        Maybe<LoginSession> maybe = Maybe.create(emitter -> {
+            emitter.onComplete();
+        });
+        return maybe
+                .subscribeOn(Schedulers.io())
+                .timeout(5, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread());
     }
 }
