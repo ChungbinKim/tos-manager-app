@@ -106,16 +106,6 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void skipLogIn() {
-        viewModel.skipLogIn();
-        sharedPreferences.edit().putBoolean("isAccountless", true).apply();
-
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        finish();
-    }
-
     private void setUpObservers() {
         viewModel.getIsLogging().observe(this, b -> {
             // 로그인중 버튼 비활성화
