@@ -2,6 +2,7 @@ package com.example.tosmanager.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.Group;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
 import android.content.DialogInterface;
@@ -18,10 +19,13 @@ import android.widget.TextView;
 import com.example.tosmanager.R;
 import com.example.tosmanager.model.ExtraName;
 import com.example.tosmanager.util.CreateDialog;
+import com.example.tosmanager.viewmodel.AddTosViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class AddTosActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
+
+    private AddTosViewModel viewModel;
     // UI
     private CheckBox doNotShowAgain;
 
@@ -31,6 +35,7 @@ public class AddTosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_tos);
         getSupportActionBar().setTitle(R.string.title_input_tos);
 
+        viewModel = new ViewModelProvider(this).get(AddTosViewModel.class);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         // 설명 text
@@ -52,8 +57,11 @@ public class AddTosActivity extends AppCompatActivity {
         Button summarizeButton = findViewById(R.id.addTosButton);
         summarizeButton.setOnClickListener(v -> {
             CreateDialog.createPrompt(this, R.string.text_summarize_dialog_message, (dialog, which) -> {
-                Intent i = new Intent(this, TosDetailsActivity.class);
-                startActivity(i);
+                viewModel.summarize(textInputByShare.getText())
+                        .subscribe(() -> {
+                            Intent i = new Intent(this, TosDetailsActivity.class);
+                            startActivity(i);
+                        }, e -> {});
             }).show();
         });
 
