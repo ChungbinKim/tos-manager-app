@@ -127,6 +127,4 @@
 <p>위의 내용을 확인하고 동의하신다면 아래 입력란에 \"<b>동의합니다</b>\" 또는 \"<b>I agree</b>\"를 입력하시고, 확인을 눌러주세요.</p>
 ]]>
     </string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

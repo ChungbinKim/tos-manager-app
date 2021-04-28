@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.example.tosmanager.R;
 import com.example.tosmanager.model.DataHolder;
 import com.example.tosmanager.util.CreateDialog;
+import com.example.tosmanager.viewmodel.ConfigurationViewModel;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -21,11 +23,14 @@ public class ConfigurationFragment extends PreferenceFragmentCompat {
     private static final int IMPORT_DATA = 1;
     private static final int EXPORT_DATA = 2;
 
+    private ConfigurationViewModel viewModel;
+
     private boolean promptResult;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey);
+        viewModel = new ViewModelProvider(this).get(ConfigurationViewModel.class);
 
         DataHolder dataHolder = DataHolder.getInstance();
 
@@ -90,18 +95,20 @@ public class ConfigurationFragment extends PreferenceFragmentCompat {
                     case IMPORT_DATA:
                         InputStream inputStream = getActivity().getContentResolver().openInputStream(data.getData());
 
-                        // TODO: 입력 -> DB에 저장
-                        Toast.makeText(getActivity(), "import", Toast.LENGTH_SHORT).show();
-
-                        inputStream.close();
+                        viewModel.importData(inputStream)
+                                .doFinally(inputStream::close)
+                                .subscribe(() -> {
+                                    Toast.makeText(getActivity(), "import", Toast.LENGTH_SHORT).show();
+                                }, e -> {});
                         break;
                     case EXPORT_DATA:
                         OutputStream outputStream = getActivity().getContentResolver().openOutputStream(data.getData());
 
-                        // TODO: DB 가져오기 -> 출력
-                        Toast.makeText(getActivity(), "export", Toast.LENGTH_SHORT).show();
-
-                        outputStream.close();
+                        viewModel.exportData(outputStream)
+                                .doFinally(outputStream::close)
+                                .subscribe(() -> {
+                                    Toast.makeText(getActivity(), "export", Toast.LENGTH_SHORT).show();
+                                }, e -> {});
                         break;
                 }
             }
